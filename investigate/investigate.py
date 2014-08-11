@@ -59,7 +59,7 @@ class Investigate(object):
             json.dumps(domains)
         )
 
-    def get_categorization(self, domains, labels=False):
+    def categorization(self, domains, labels=False):
         '''Get the domain status and categorization of a domain or list of domains.
         'domains' can be either a single domain, or a list of domains.
         Setting 'labels' to True will give back categorizations in human-readable
@@ -74,7 +74,7 @@ class Investigate(object):
         else:
             raise Investigate.DOMAIN_ERR
 
-    def get_cooccurrences(self, domain):
+    def cooccurrences(self, domain):
         '''Get the cooccurrences of the given domain.
 
         For details, see chttps://sgraph.opendns.com/docs/api#co-occurrences

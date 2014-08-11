@@ -10,14 +10,14 @@ def test_categorization(inv):
 
     # Test get with a single domain
     domain = 'www.amazon.com'
-    resp_json = inv.get_categorization(domain)
+    resp_json = inv.categorization(domain)
 
     assert_keys_in(resp_json, domain)
     assert_keys_in(resp_json[domain], *keys)
 
     # test post with several domains
     domains = ['www.amazon.com', 'www.opendns.com', 'bibikun.ru']
-    resp_json = inv.get_categorization(domains)
+    resp_json = inv.categorization(domains)
     assert_keys_in(resp_json, *domains)
     for d in domains:
         assert_keys_in(resp_json[d], *keys)
@@ -27,7 +27,7 @@ def test_categorization(inv):
         inv.get_categorization({"wrong": "type"})
 
 def test_cooccurrences(inv):
-    resp_json = inv.get_cooccurrences('test.com')
+    resp_json = inv.cooccurrences('test.com')
     assert_keys_in(resp_json, 'found', 'pfs2')
     for double in resp_json['pfs2']:
         assert len(double) == 2
