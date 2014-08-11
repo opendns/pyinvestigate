@@ -37,3 +37,28 @@ def test_related(inv):
     assert_keys_in(resp_json, 'found', 'tb1')
     for double in resp_json['tb1']:
         assert len(double) == 2
+
+def test_security(inv):
+    keys = [
+        "dga_score",
+        "perplexity",
+        "entropy",
+        "securerank2",
+        "pagerank",
+        "asn_score",
+        "prefix_score",
+        "rip_score",
+        "fastflux",
+        "popularity",
+        "geodiversity",
+        "geodiversity_normalized",
+        "tld_geodiversity",
+        "geoscore",
+        "ks_test",
+        "handlings",
+        "attack",
+        "threat_type",
+        "found",
+    ]
+    resp_json = inv.security("test.com")
+    assert_keys_in(resp_json, *keys)

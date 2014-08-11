@@ -12,6 +12,7 @@ class Investigate(object):
             "categorization":   "domains/categorization/",
             "cooccurrences":    "recommendations/name/{}.json",
             "related":          "links/name/{}.json",
+            "security":         "security/name/{}.json",
         }
         self._auth_header = {"Authorization": "Bearer " + self.api_key}
 
@@ -89,4 +90,12 @@ class Investigate(object):
         For details, see https://sgraph.opendns.com/docs/api#relatedDomains
         '''
         uri = self._uris["related"].format(domain)
+        return self.get_parse(uri)
+
+    def security(self, domain):
+        '''Get the Security Information for the given domain.
+
+        For details, see https://sgraph.opendns.com/docs/api#securityInfo
+        '''
+        uri = self._uris["security"].format(domain)
         return self.get_parse(uri)
