@@ -25,3 +25,9 @@ def test_categorization(inv):
     # giving the wrong kind of object raises an exception
     with pytest.raises(Exception):
         inv.get_categorization({"wrong": "type"})
+
+def test_cooccurrences(inv):
+    resp_json = inv.get_cooccurrences('test.com')
+    assert_keys_in(resp_json, 'found', 'pfs2')
+    for double in resp_json['pfs2']:
+        assert len(double) == 2
