@@ -31,3 +31,9 @@ def test_cooccurrences(inv):
     assert_keys_in(resp_json, 'found', 'pfs2')
     for double in resp_json['pfs2']:
         assert len(double) == 2
+
+def test_related(inv):
+    resp_json = inv.related("test.com")
+    assert_keys_in(resp_json, 'found', 'tb1')
+    for double in resp_json['tb1']:
+        assert len(double) == 2

@@ -9,8 +9,9 @@ class Investigate(object):
     def __init__(self, api_key):
         self.api_key = api_key
         self._uris = {
-            "categorization": "domains/categorization/",
-            "cooccurrences": "recommendations/name/{}.json"
+            "categorization":   "domains/categorization/",
+            "cooccurrences":    "recommendations/name/{}.json",
+            "related":          "links/name/{}.json",
         }
         self._auth_header = {"Authorization": "Bearer " + self.api_key}
 
@@ -77,7 +78,15 @@ class Investigate(object):
     def cooccurrences(self, domain):
         '''Get the cooccurrences of the given domain.
 
-        For details, see chttps://sgraph.opendns.com/docs/api#co-occurrences
+        For details, see https://sgraph.opendns.com/docs/api#co-occurrences
         '''
         uri = self._uris["cooccurrences"].format(domain)
+        return self.get_parse(uri)
+
+    def related(self, domain):
+        '''Get the related domains of the given domain.
+
+        For details, see https://sgraph.opendns.com/docs/api#relatedDomains
+        '''
+        uri = self._uris["related"].format(domain)
         return self.get_parse(uri)
