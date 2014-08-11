@@ -98,10 +98,6 @@ def test_domain_rr_history(inv):
         for rr_entry in rrs_tf_entry['rrs']:
             assert_keys_in(rr_entry, *rrs_keys)
 
-    resp_json = inv.rr_history('platform.twitter.com', 'CNAME')
-    print("\nresp_json")
-    pprint(resp_json)
-
 def test_ip_rr_history(inv):
     features_keys = [
         "rr_count", "ld2_count", "ld3_count", "ld2_1_count", "ld2_2_count",
@@ -116,3 +112,10 @@ def test_ip_rr_history(inv):
     assert_keys_in(resp_json['features'], *features_keys)
     for rr_entry in resp_json['rrs']:
         assert_keys_in(rr_entry, *rr_keys)
+
+def test_latest_domains(inv):
+    resp_json = inv.latest_domains('46.161.41.43')
+    print("\nresp_json")
+    pprint(resp_json)
+    assert type(resp_json) is list
+    assert len(resp_json) > 0

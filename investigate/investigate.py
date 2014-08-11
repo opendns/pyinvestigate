@@ -16,6 +16,7 @@ class Investigate(object):
     IP_PATTERN = re.compile(r'(\d{1,3}\.){3}\d{1,3}')
 
     DOMAIN_ERR = ValueError("domains must be a string or a list of strings")
+    IP_ERR = ValueError("invalid IP address")
     UNSUPPORTED_DNS_QUERY = ValueError("supported query types are: {}"
         .format(SUPPORTED_DNS_TYPES)
     )
@@ -27,6 +28,7 @@ class Investigate(object):
             "cooccurrences":        "recommendations/name/{}.json",
             "domain_rr_history":    "dnsdb/name/{}/{}.json",
             "ip_rr_history":        "dnsdb/ip/{}/{}.json",
+            "latest_domains":       "ips/{}/latest_domains",
             "related":              "links/name/{}.json",
             "security":             "security/name/{}.json",
             "tags":                 "domains/{}/latest_tags",
@@ -151,3 +153,16 @@ class Investigate(object):
 
         # otherwise, query the domain
         return self._domain_rr_history(query, query_type)
+
+    def latest_domains(self, ip):
+        '''Gets the latest known malicious domains associated with the given
+        IP address, if any. Returns the list of malicious domains.
+        '''
+        if not Investigate.IP_PATTERN.match(ip):
+            raise Investigate.IP_ERR
+
+        uri = self._uris["latest_domains"].format(ip)
+        resp_json = self.get_parse(uri)
+
+        # parse out the domain names
+        return [ val for d in resp_json for key, val in d.iteritems() if key == 'name' ]
