@@ -13,6 +13,7 @@ class Investigate(object):
             "cooccurrences":    "recommendations/name/{}.json",
             "related":          "links/name/{}.json",
             "security":         "security/name/{}.json",
+            "tags":             "domains/{}/latest_tags",
         }
         self._auth_header = {"Authorization": "Bearer " + self.api_key}
 
@@ -98,4 +99,12 @@ class Investigate(object):
         For details, see https://sgraph.opendns.com/docs/api#securityInfo
         '''
         uri = self._uris["security"].format(domain)
+        return self.get_parse(uri)
+
+    def domain_tags(self, domain):
+        '''Get the domain tagging dates for the given domain.
+
+        For details, see https://sgraph.opendns.com/docs/api#latest_tags
+        '''
+        uri = self._uris["tags"].format(domain)
         return self.get_parse(uri)

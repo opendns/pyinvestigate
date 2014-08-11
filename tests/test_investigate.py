@@ -62,3 +62,9 @@ def test_security(inv):
     ]
     resp_json = inv.security("test.com")
     assert_keys_in(resp_json, *keys)
+
+def test_domain_tags(inv):
+    resp_json = inv.domain_tags('bibikun.ru')
+    for tag_entry in resp_json:
+        assert_keys_in(tag_entry, 'category', 'period', 'url')
+        assert_keys_in(tag_entry['period'], 'begin', 'end')
