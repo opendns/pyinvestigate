@@ -14,11 +14,17 @@ class Investigate(object):
         self._auth_header = {"Authorization": "Bearer " + self.api_key}
 
     def get(self, uri, params={}):
+        '''A generic method to make GET requests to the OpenDNS Investigate API
+        on the given URI.
+        '''
         return requests.get(urlparse.urljoin(Investigate.BASE_URL, uri),
             params=params, headers=self._auth_header
         )
 
     def post(self, uri, params={}, data={}):
+        '''A generic method to make POST requests to the OpenDNS Investigate API
+        on the given URI.
+        '''
         return requests.post(
             urlparse.urljoin(Investigate.BASE_URL, uri),
             params=params, data=data, headers=self._auth_header
@@ -30,9 +36,15 @@ class Investigate(object):
         return r.json()
 
     def get_parse(self, uri, params={}):
+        '''Convenience method to call get() on an arbitrary URI and parse the response
+        into a JSON object. Raises an error on non-200 response status.
+        '''
         return self._request_parse(self.get, uri, params)
 
     def post_parse(self, uri, params={}, data={}):
+        '''Convenience method to call post() on an arbitrary URI and parse the response
+        into a JSON object. Raises an error on non-200 response status.
+        '''
         return self._request_parse(self.post, uri, params, data)
 
     def _get_categorization(self, domain, labels):
@@ -47,6 +59,13 @@ class Investigate(object):
         )
 
     def get_categorization(self, domains, labels=False):
+        '''Get the domain status and categorization of a domain or list of domains.
+        'domains' can be either a single domain, or a list of domains.
+        Setting 'labels' to True will give back categorizations in human-readable
+        form.
+
+        For more detail, see https://sgraph.opendns.com/docs/api#categorization
+        '''
         if type(domains) is str:
             return self._get_categorization(domains, labels)
         elif type(domains) is list:
