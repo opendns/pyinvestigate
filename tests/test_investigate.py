@@ -68,3 +68,51 @@ def test_domain_tags(inv):
     for tag_entry in resp_json:
         assert_keys_in(tag_entry, 'category', 'period', 'url')
         assert_keys_in(tag_entry['period'], 'begin', 'end')
+
+def test_domain_rr_history(inv):
+    features_keys = [
+        "age", "ttls_min", "ttls_max", "ttls_mean", "ttls_median", "ttls_stddev",
+        "country_codes", "country_count", "asns", "asns_count", "rips_diversity",
+        "locations", "locations_count", "geo_distance_sum", "geo_distance_mean",
+        "non_routable", "mail_exchanger", "cname", "ff_candidate", "rips_stability",
+        "prefixes", "prefixes_count",
+        # undocumented results
+        "rips", "is_subdomain", "base_domain", "div_rips"
+    ]
+    rrs_tf_keys = [
+        "first_seen", "last_seen", "rrs"
+    ]
+    rrs_keys = [
+        "name", "ttl", "class", "type", "rr"
+    ]
+
+    # test a domain
+    resp_json = inv.rr_history('bibikun.ru')
+    assert_keys_in(resp_json, 'features', 'rrs_tf')
+    # make sure all the keys in the response are valid keys
+    for key in resp_json['features'].keys():
+        assert key in features_keys
+
+    for rrs_tf_entry in resp_json['rrs_tf']:
+        assert_keys_in(rrs_tf_entry, *rrs_tf_keys)
+        for rr_entry in rrs_tf_entry['rrs']:
+            assert_keys_in(rr_entry, *rrs_keys)
+
+    resp_json = inv.rr_history('platform.twitter.com', 'CNAME')
+    print("\nresp_json")
+    pprint(resp_json)
+
+def test_ip_rr_history(inv):
+    features_keys = [
+        "rr_count", "ld2_count", "ld3_count", "ld2_1_count", "ld2_2_count",
+        "div_ld2", "div_ld3", "div_ld2_1", "div_ld2_2"
+    ]
+    rr_keys = [
+        "rr", "ttl", "class", "type", "name" # not 'ip' as the documentation says
+    ]
+    # test an IP
+    resp_json = inv.rr_history('50.23.225.49')
+    assert_keys_in(resp_json, 'rrs', 'features')
+    assert_keys_in(resp_json['features'], *features_keys)
+    for rr_entry in resp_json['rrs']:
+        assert_keys_in(rr_entry, *rr_keys)

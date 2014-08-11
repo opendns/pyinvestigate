@@ -1,19 +1,35 @@
-import requests
 import json
+import re
+import requests
 import urlparse
 
 class Investigate(object):
     BASE_URL = 'https://investigate.api.opendns.com/'
+    SUPPORTED_DNS_TYPES = [
+        "A",
+        "NS",
+        "MX",
+        "TXT",
+        "CNAME",
+    ]
+
+    IP_PATTERN = re.compile(r'(\d{1,3}\.){3}\d{1,3}')
+
     DOMAIN_ERR = ValueError("domains must be a string or a list of strings")
+    UNSUPPORTED_DNS_QUERY = ValueError("supported query types are: {}"
+        .format(SUPPORTED_DNS_TYPES)
+    )
 
     def __init__(self, api_key):
         self.api_key = api_key
         self._uris = {
-            "categorization":   "domains/categorization/",
-            "cooccurrences":    "recommendations/name/{}.json",
-            "related":          "links/name/{}.json",
-            "security":         "security/name/{}.json",
-            "tags":             "domains/{}/latest_tags",
+            "categorization":       "domains/categorization/",
+            "cooccurrences":        "recommendations/name/{}.json",
+            "domain_rr_history":    "dnsdb/name/{}/{}.json",
+            "ip_rr_history":        "dnsdb/ip/{}/{}.json",
+            "related":              "links/name/{}.json",
+            "security":             "security/name/{}.json",
+            "tags":                 "domains/{}/latest_tags",
         }
         self._auth_header = {"Authorization": "Bearer " + self.api_key}
 
@@ -108,3 +124,30 @@ class Investigate(object):
         '''
         uri = self._uris["tags"].format(domain)
         return self.get_parse(uri)
+
+    def _domain_rr_history(self, domain, query_type):
+        uri = self._uris["domain_rr_history"].format(query_type, domain)
+        return self.get_parse(uri)
+
+    def _ip_rr_history(self, ip, query_type):
+        uri = self._uris["ip_rr_history"].format(query_type, ip)
+        return self.get_parse(uri)
+
+    def rr_history(self, query, query_type="A"):
+        '''Get the RR (Resource Record) History of the given domain or IP.
+        The default query type is for 'A' records, but the following query types
+        are supported:
+
+        A, NS, MX, TXT, CNAME
+
+        For details, see https://sgraph.opendns.com/docs/api#dnsrr_domain
+        '''
+        if query_type not in Investigate.SUPPORTED_DNS_TYPES:
+            raise Investigate.UNSUPPORTED_DNS_QUERY
+
+        # if this is an IP address, query the IP
+        if Investigate.IP_PATTERN.match(query):
+            return self._ip_rr_history(query, query_type)
+
+        # otherwise, query the domain
+        return self._domain_rr_history(query, query_type)
