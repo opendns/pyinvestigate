@@ -57,4 +57,8 @@ which can be found [here](https://sgraph.opendns.com/tokens-view).
 # IP RR history
 >>> inv.rr_history('50.23.225.49')
 ...
+
+# latest domains for an IP
+>>> inv.latest_domains('46.161.41.43')
+[u'7ltd.biz', u'co0s.ru', u't0link.in', u'p0st.at', u'1ooz.asia', u'brand-sales.ru', u'xn--80aabhmtlfcyd3a1a.xn--p1ai', u'1000apps.ru', u'soapstock.net']
 ```
