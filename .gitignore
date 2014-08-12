@@ -5,3 +5,4 @@ __pycache__/
 build/
 dist/
 investigate.egg-info/
+*.DS_Store

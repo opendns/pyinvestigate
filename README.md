@@ -4,6 +4,12 @@ pyinvestigate
 Python module to interface with the OpenDNS Investigate API
 
 # Installation
+`pyinvestigate` can be installed either with pip:
+```sh
+$ pip install investigate
+```
+
+or manually:
 ```sh
 $ git clone https://github.com/dead10ck/pyinvestigate.git
 $ cd pyinvestigate
