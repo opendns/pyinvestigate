@@ -1,4 +1,7 @@
 *.swp
 *.pyc
 tags
-__pycache__
+__pycache__/
+build/
+dist/
+investigate.egg-info/
