@@ -25,7 +25,7 @@ which can be found [here](https://sgraph.opendns.com/tokens-view).
 >>> api_key = 'f29be9cc-f833-4a9a-b984-19dc4d5186ac'
 
 # categorization and status
->>> inv = investigate.Investigate(key)
+>>> inv = investigate.Investigate(api_key)
 >>> inv.categorization('amazon.com')
 {u'amazon.com': {u'status': 1, u'content_categories': [u'8'], u'security_categories': []}}
 
