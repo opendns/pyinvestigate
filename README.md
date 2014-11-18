@@ -22,7 +22,7 @@ which can be found [here](https://sgraph.opendns.com/tokens-view).
 
 ```python
 >>> import investigate
->>> api_key = 'f29be9cc-f833-4a9a-b984-19dc4d5186ac'
+>>> api_key = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
 
 # categorization and status
 >>> inv = investigate.Investigate(api_key)
