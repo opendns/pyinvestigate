@@ -119,3 +119,98 @@ def test_latest_domains(inv):
     pprint(resp_json)
     assert type(resp_json) is list
     assert len(resp_json) > 0
+
+def test_email_whois(inv):
+    resp_json = inv.email_whois('test@example.com')
+    print("\nresp_json")
+    pprint(resp_json)
+    whois_keys = ["domains", "limit", "moreDataAvailable", "totalResults"]
+    assert_keys_in(resp_json, 'test@example.com')
+    assert_keys_in(resp_json['test@example.com'], *whois_keys)
+
+def test_domain_whois(inv):
+    resp_json = inv.domain_whois('opendns.com')
+    whois_keys = [
+        'registrantFaxExt',
+        'administrativeContactPostalCode',
+        'zoneContactCity',
+        'addresses',
+        'billingContactState',
+        'technicalContactCountry',
+        'auditUpdatedDate',
+        'technicalContactFax',
+        'technicalContactTelephone',
+        'billingContactStreet',
+        'registrantFax',
+        'technicalContactPostalCode',
+        'registrantOrganization',
+        'zoneContactPostalCode',
+        'technicalContactState',
+        'registrantState',
+        'administrativeContactName',
+        'billingContactFaxExt',
+        'billingContactCity',
+        'technicalContactEmail',
+        'registrantCountry',
+        'technicalContactFaxExt',
+        'registrantName',
+        'administrativeContactOrganization',
+        'billingContactCountry',
+        'billingContactName',
+        'registrarName',
+        'technicalContactTelephoneExt',
+        'administrativeContactFaxExt',
+        'zoneContactFax',
+        'timestamp',
+        'registrantCity',
+        'zoneContactTelephoneExt',
+        'administrativeContactTelephoneExt',
+        'status',
+        'updated',
+        'whoisServers',
+        'technicalContactName',
+        'technicalContactStreet',
+        'nameServers',
+        'zoneContactFaxExt',
+        'expires',
+        'technicalContactCity',
+        'administrativeContactStreet',
+        'billingContactFax',
+        'technicalContactOrganization',
+        'administrativeContactState',
+        'zoneContactOrganization',
+        'billingContactPostalCode',
+        'zoneContactStreet',
+        'zoneContactName',
+        'registrantPostalCode',
+        'billingContactTelephone',
+        'emails',
+        'registrantTelephone',
+        'administrativeContactCountry',
+        'administrativeContactCity',
+        'administrativeContactTelephone',
+        'created',
+        'registrantStreet',
+        'domainName',
+        'administrativeContactEmail',
+        'billingContactEmail',
+        'timeOfLatestRealtimeCheck',
+        'zoneContactState',
+        'registrantEmail',
+        'administrativeContactFax',
+        'billingContactTelephoneExt',
+        'zoneContactCountry',
+        'zoneContactEmail',
+        'registrantTelephoneExt',
+        'billingContactOrganization',
+        'registrarIANAID',
+        'zoneContactTelephone',
+        'hasRawText']
+    assert_keys_in(resp_json[0], *whois_keys)
+
+def test_ns_whois(inv):
+    resp_json = inv.ns_whois('auth1.opendns.com')
+    assert_keys_in(resp_json, 'auth1.opendns.com')
+    whois_keys = ["domains", "limit", "moreDataAvailable", "totalResults"]
+    assert_keys_in(resp_json['auth1.opendns.com'], *whois_keys)
+

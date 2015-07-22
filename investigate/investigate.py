@@ -21,8 +21,9 @@ class Investigate(object):
         .format(SUPPORTED_DNS_TYPES)
     )
 
-    def __init__(self, api_key):
+    def __init__(self, api_key, proxies={}):
         self.api_key = api_key
+        self.proxies = proxies
         self._uris = {
             "categorization":       "domains/categorization/",
             "cooccurrences":        "recommendations/name/{}.json",
@@ -32,6 +33,9 @@ class Investigate(object):
             "related":              "links/name/{}.json",
             "security":             "security/name/{}.json",
             "tags":                 "domains/{}/latest_tags",
+            "whois_email":          "whois/emails/{}",
+            "whois_ns":             "whois/nameservers/{}",
+            "whois_domain":         "whois/{}/history",
         }
         self._auth_header = {"Authorization": "Bearer " + self.api_key}
 
@@ -40,7 +44,7 @@ class Investigate(object):
         on the given URI.
         '''
         return requests.get(urlparse.urljoin(Investigate.BASE_URL, uri),
-            params=params, headers=self._auth_header
+            params=params, headers=self._auth_header, proxies=self.proxies
         )
 
     def post(self, uri, params={}, data={}):
@@ -49,7 +53,8 @@ class Investigate(object):
         '''
         return requests.post(
             urlparse.urljoin(Investigate.BASE_URL, uri),
-            params=params, data=data, headers=self._auth_header
+            params=params, data=data, headers=self._auth_header,
+            proxies=self.proxies
         )
 
     def _request_parse(self, method, *args):
@@ -166,3 +171,40 @@ class Investigate(object):
 
         # parse out the domain names
         return [ val for d in resp_json for key, val in d.iteritems() if key == 'name' ]
+
+    def domain_whois(self, domain):
+        '''Gets whois information for a domain'''
+        uri = self._uris["whois_domain"].format(domain)
+        resp_json = self.get_parse(uri)
+        return resp_json
+
+    def ns_whois(self, nameservers):
+        '''Gets the domains that have been registered with a nameserver or
+        nameservers'''
+        if not isinstance(nameservers, list):
+            uri = self._uris["whois_ns"].format(nameservers)
+            params = {}
+        else:
+            uri = self._uris["whois_ns"].format('')
+            params = {'emailList' : ','.join(nameservers)}
+
+        resp_json = self.get_parse(uri, params=params)
+        return resp_json
+
+    def email_whois(self, emails):
+        '''Gets the domains that have been registered with a given email
+        address
+        '''
+        if not isinstance(emails, list):
+            uri = self._uris["whois_email"].format(emails)
+            params = {}
+        else:
+            uri = self._uris["whois_email"].format('')
+            params = {'emailList' : ','.join(emails)}
+
+        resp_json = self.get_parse(uri, params=params)
+        return resp_json
+
+
+
+
