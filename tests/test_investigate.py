@@ -1,5 +1,6 @@
 from pprint import pprint
 import pytest
+import datetime
 
 def assert_keys_in(json_obj, *keys):
     for key in keys:
@@ -215,7 +216,7 @@ def test_ns_whois(inv):
     assert_keys_in(resp_json['auth1.opendns.com'], *whois_keys)
 
 def test_search(inv):
-    resp_json = inv.search('exa[a-z]ple.com')
+    resp_json = inv.search('ope[a-z]dns.com', start=datetime.timedelta(days=30), limit=100, include_category=True)
 
     search_keys = [
         'matches', 'totalResults', 'limit', 'expression', 'moreDataAvailable'
@@ -223,6 +224,8 @@ def test_search(inv):
     match_keys = [
         'securityCategories', 'firstSeenISO', 'name', 'firstSeen'
     ]
+
+    print(resp_json)
 
     assert_keys_in(resp_json, *search_keys)
     assert_keys_in(resp_json['matches'][0], *match_keys)

@@ -2,6 +2,7 @@ import json
 import re
 import requests
 import urlparse
+import datetime, time
 
 class Investigate(object):
     BASE_URL = 'https://investigate.api.opendns.com/'
@@ -20,6 +21,7 @@ class Investigate(object):
     UNSUPPORTED_DNS_QUERY = ValueError("supported query types are: {}"
         .format(SUPPORTED_DNS_TYPES)
     )
+    SEARCH_ERR = ValueError("Start argument must be a datetime or a timedelta")
 
     def __init__(self, api_key, proxies={}):
         self.api_key = api_key
@@ -206,19 +208,31 @@ class Investigate(object):
         resp_json = self.get_parse(uri, params=params)
         return resp_json
 
-    def search(self, pattern, start=-30, limit=None):
+    def search(self, pattern, start=None, limit=None, include_category=None):
         '''Searches for domains that match a given pattern'''
         
-        if start < 0:
-            start_arg = "{}days".format(start)
-        else:
-            start_arg = str(start)
+        if start is None:
+            start = datetime.timedelta(days=30)
 
+        if isinstance(start, datetime.timedelta):
+            start_arg = int(time.mktime((datetime.datetime.utcnow() - start).timetuple()) * 1000)
+        elif isinstance(start, datetime.datetime):
+            start_arg = int(time.mktime(start.timetuple()) * 1000)
+        else:
+            raise Investigate.SEARCH_ERR
+        
         limit_arg = ""
         if limit is not None and isinstance(limit, int):
             limit_arg = "&limit={}".format(limit)
 
-        uri = self._uris['search'].format(pattern, start_arg) + limit_arg
+        include_category_arg = ""
+        if include_category is not None and isinstance(include_category, bool):
+            include_category_arg = "&includeCategory={}".format(str(include_category).lower())
+
+        uri = self._uris['search'].format(pattern, start_arg) + limit_arg + include_category_arg
+
+        print uri
+
         return self.get_parse(uri)
 
 
