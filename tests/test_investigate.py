@@ -225,7 +225,5 @@ def test_search(inv):
         'securityCategories', 'firstSeenISO', 'name', 'firstSeen'
     ]
 
-    print(resp_json)
-
     assert_keys_in(resp_json, *search_keys)
     assert_keys_in(resp_json['matches'][0], *match_keys)

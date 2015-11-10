@@ -38,7 +38,7 @@ class Investigate(object):
             "whois_email":          "whois/emails/{}",
             "whois_ns":             "whois/nameservers/{}",
             "whois_domain":         "whois/{}/history",
-            "search":               "search/{}?start={}"
+            "search":               "search/{}"
         }
         self._auth_header = {"Authorization": "Bearer " + self.api_key}
 
@@ -211,26 +211,26 @@ class Investigate(object):
     def search(self, pattern, start=None, limit=None, include_category=None):
         '''Searches for domains that match a given pattern'''
         
+        params = dict()
+
         if start is None:
             start = datetime.timedelta(days=30)
 
         if isinstance(start, datetime.timedelta):
-            start_arg = int(time.mktime((datetime.datetime.utcnow() - start).timetuple()) * 1000)
+            params['start'] = int(time.mktime((datetime.datetime.utcnow() - start).timetuple()) * 1000)
         elif isinstance(start, datetime.datetime):
-            start_arg = int(time.mktime(start.timetuple()) * 1000)
+            params['start'] = int(time.mktime(start.timetuple()) * 1000)
         else:
             raise Investigate.SEARCH_ERR
         
-        limit_arg = ""
         if limit is not None and isinstance(limit, int):
-            limit_arg = "&limit={}".format(limit)
-
-        include_category_arg = ""
+            params['limit'] = limit
         if include_category is not None and isinstance(include_category, bool):
-            include_category_arg = "&includeCategory={}".format(str(include_category).lower())
+            params['includeCategory'] = str(include_category).lower()
 
-        uri = self._uris['search'].format(pattern, start_arg) + limit_arg + include_category_arg
-        return self.get_parse(uri)
+        uri = self._uris['search'].format(pattern)
+
+        return self.get_parse(uri, params)
 
 
 
