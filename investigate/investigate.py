@@ -36,6 +36,7 @@ class Investigate(object):
             "whois_email":          "whois/emails/{}",
             "whois_ns":             "whois/nameservers/{}",
             "whois_domain":         "whois/{}/history",
+            "search":               "search/{}?start={}"
         }
         self._auth_header = {"Authorization": "Bearer " + self.api_key}
 
@@ -205,6 +206,20 @@ class Investigate(object):
         resp_json = self.get_parse(uri, params=params)
         return resp_json
 
+    def search(self, pattern, start=-30, limit=None):
+        '''Searches for domains that match a given pattern'''
+        
+        if start < 0:
+            start_arg = "{}days".format(start)
+        else:
+            start_arg = str(start)
+
+        limit_arg = ""
+        if limit is not None and isinstance(limit, int):
+            limit_arg = "&limit={}".format(limit)
+
+        uri = self._uris['search'].format(pattern, start_arg) + limit_arg
+        return self.get_parse(uri)
 
 
 

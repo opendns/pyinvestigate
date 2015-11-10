@@ -214,3 +214,15 @@ def test_ns_whois(inv):
     whois_keys = ["domains", "limit", "moreDataAvailable", "totalResults"]
     assert_keys_in(resp_json['auth1.opendns.com'], *whois_keys)
 
+def test_search(inv):
+    resp_json = inv.search('exa[a-z]ple.com')
+
+    search_keys = [
+        'matches', 'totalResults', 'limit', 'expression', 'moreDataAvailable'
+    ]
+    match_keys = [
+        'securityCategories', 'firstSeenISO', 'name', 'firstSeen'
+    ]
+
+    assert_keys_in(resp_json, *search_keys)
+    assert_keys_in(resp_json['matches'][0], *match_keys)
