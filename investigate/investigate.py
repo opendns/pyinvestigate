@@ -230,9 +230,6 @@ class Investigate(object):
             include_category_arg = "&includeCategory={}".format(str(include_category).lower())
 
         uri = self._uris['search'].format(pattern, start_arg) + limit_arg + include_category_arg
-
-        print uri
-
         return self.get_parse(uri)
 
 
