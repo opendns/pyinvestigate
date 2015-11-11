@@ -1,7 +1,7 @@
 import json
 import re
 import requests
-import urlparse
+import urlparse, urllib
 import datetime, time
 
 class Investigate(object):
@@ -228,7 +228,7 @@ class Investigate(object):
         if include_category is not None and isinstance(include_category, bool):
             params['includeCategory'] = str(include_category).lower()
 
-        uri = self._uris['search'].format(pattern)
+        uri = self._uris['search'].format(urllib.quote_plus(pattern))
 
         return self.get_parse(uri, params)
 
