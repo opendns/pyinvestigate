@@ -61,9 +61,10 @@ which can be found [here](https://sgraph.opendns.com/tokens-view).
 # latest domains for an IP
 >>> inv.latest_domains('46.161.41.43')
 [u'7ltd.biz', u'co0s.ru', u't0link.in', u'p0st.at', u'1ooz.asia', u'brand-sales.ru', u'xn--80aabhmtlfcyd3a1a.xn--p1ai', u'1000apps.ru', u'soapstock.net']
-```
+
 
 # search newly observed domains by regex pattern
 >>> inv.search('paypal.*', start=datetime.timedelta(days=1), limit=100, include_category=True)
 {u'matches': [{u'securityCategories': None, u'firstSeenISO': u'2016-02-12T11:18:00.000Z', u'name': u'paypal.cgi-bin.resolvemerchant.webappmpphome.com', u'firstSeen': 1455275880000}
+...
 ```
