@@ -232,5 +232,22 @@ class Investigate(object):
 
         return self.get_parse(uri, params)
 
+    def as_for_ip(self, ip):
+        '''Gets the AS information for a given IP address.'''
+        if not Investigate.IP_PATTERN.match(ip):
+            raise Investigate.IP_ERR
+
+        uri = self._uris["as_for_ip"].format(ip)
+        resp_json = self.get_parse(uri)
+
+        return resp_json
+
+    def prefixes_for_asn(self, asn):
+        '''Gets the AS information for a given ASN. Return the CIDR and geolocation associated with the AS.'''
+
+        uri = self._uris["prefixes_for_asn"].format(asn)
+        resp_json = self.get_parse(uri)
+
+        return resp_json
 
 
