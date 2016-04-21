@@ -38,7 +38,9 @@ class Investigate(object):
             "whois_email":          "whois/emails/{}",
             "whois_ns":             "whois/nameservers/{}",
             "whois_domain":         "whois/{}/history",
-            "search":               "search/{}"
+            "search":               "search/{}",
+            "as_for_ip":            "bgp_routes/ip/{}/as_for_ip.json",
+            "prefixes_for_asn":     "bgp_routes/asn/{}/prefixes_for_asn.json"
         }
         self._auth_header = {"Authorization": "Bearer " + self.api_key}
 
@@ -232,5 +234,22 @@ class Investigate(object):
 
         return self.get_parse(uri, params)
 
+    def as_for_ip(self, ip):
+        '''Gets the AS information for a given IP address.'''
+        if not Investigate.IP_PATTERN.match(ip):
+            raise Investigate.IP_ERR
+
+        uri = self._uris["as_for_ip"].format(ip)
+        resp_json = self.get_parse(uri)
+
+        return resp_json
+
+    def prefixes_for_asn(self, asn):
+        '''Gets the AS information for a given ASN. Return the CIDR and geolocation associated with the AS.'''
+
+        uri = self._uris["prefixes_for_asn"].format(asn)
+        resp_json = self.get_parse(uri)
+
+        return resp_json
 
 
