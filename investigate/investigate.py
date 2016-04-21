@@ -38,7 +38,9 @@ class Investigate(object):
             "whois_email":          "whois/emails/{}",
             "whois_ns":             "whois/nameservers/{}",
             "whois_domain":         "whois/{}/history",
-            "search":               "search/{}"
+            "search":               "search/{}",
+            "as_for_ip":            "bgp_routes/ip/{}/as_for_ip.json",
+            "prefixes_for_asn":     "bgp_routes/asn/{}/prefixes_for_asn.json"
         }
         self._auth_header = {"Authorization": "Bearer " + self.api_key}
 
