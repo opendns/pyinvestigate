@@ -38,7 +38,12 @@ class Investigate(object):
             "whois_email":          "whois/emails/{}",
             "whois_ns":             "whois/nameservers/{}",
             "whois_domain":         "whois/{}/history",
-            "search":               "search/{}"
+            "search":               "search/{}",
+            "samples":              "samples/{}",
+            "sample":               "sample/{}",
+            "sample_artifacts":     "sample/{}/artifacts",
+            "sample_connections":   "sample/{}/connections",
+            "sample_samples":       "sample/{}/samples"
         }
         self._auth_header = {"Authorization": "Bearer " + self.api_key}
 
@@ -232,5 +237,45 @@ class Investigate(object):
 
         return self.get_parse(uri, params)
 
+    def samples(self, anystring, limit=None, offset=None, sortby=None):
+        '''Return an object representing the samples identified by the input domain, IP, or URL'''
 
+        uri = self._uris['samples'].format(anystring)
+        params = {'limit': limit, 'offset': offset, 'sortby': sortby}
 
+        return self.get_parse(uri, params)
+
+    def sample(self, hash, limit=None, offset=None):
+        '''Return an object representing the sample identified by the input hash, or an empty object if that sample is not found'''
+
+        uri = self._uris['sample'].format(hash)
+        params = {'limit': limit, 'offset': offset}
+
+        return self.get_parse(uri, params)
+
+    def sample_artifacts(self, hash, limit=None, offset=None):
+        '''
+            Return an object representing artifacts associated with an input hash
+            NOTE: Only available to Threat Grid customers
+        '''
+
+        uri = self._uris['sample_artifacts'].format(hash)
+        params = {'limit': limit, 'offset': offset}
+
+        return self.get_parse(uri, params)
+
+    def sample_connections(self, hash, limit=None, offset=None):
+        '''Return an object representing network connections associated with an input hash'''
+
+        uri = self._uris['sample_connections'].format(hash)
+        params = {'limit': limit, 'offset': offset}
+
+        return self.get_parse(uri, params)
+
+    def sample_samples(self, hash, limit=None, offset=None):
+        '''Return an object representing samples associated with an input hash'''
+
+        uri = self._uris['sample_samples'].format(hash)
+        params = {'limit': limit, 'offset': offset}
+
+        return self.get_parse(uri, params)
