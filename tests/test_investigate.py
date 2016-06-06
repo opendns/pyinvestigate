@@ -49,17 +49,16 @@ def test_security(inv):
         "asn_score",
         "prefix_score",
         "rip_score",
-        "fastflux",
         "popularity",
+        "fastflux",
         "geodiversity",
         "geodiversity_normalized",
         "tld_geodiversity",
         "geoscore",
         "ks_test",
-        "handlings",
         "attack",
         "threat_type",
-        "found",
+        "found"
     ]
     resp_json = inv.security("test.com")
     assert_keys_in(resp_json, *keys)
@@ -216,14 +215,147 @@ def test_ns_whois(inv):
     assert_keys_in(resp_json['auth1.opendns.com'], *whois_keys)
 
 def test_search(inv):
-    resp_json = inv.search('ope[a-z]dns.com', start=datetime.timedelta(days=30), limit=100, include_category=True)
+    resp_json = inv.search('.*go[a-z]gle.com', start=datetime.timedelta(days=30), limit=100, include_category=True)
 
     search_keys = [
         'matches', 'totalResults', 'limit', 'expression', 'moreDataAvailable'
     ]
+
     match_keys = [
         'securityCategories', 'firstSeenISO', 'name', 'firstSeen'
     ]
 
     assert_keys_in(resp_json, *search_keys)
     assert_keys_in(resp_json['matches'][0], *match_keys)
+
+def test_samples(inv):
+    resp_json = inv.samples('sso.anbtr.com')
+
+    search_keys = [
+        'query',
+        'totalResults',
+        'moreDataAvailable',
+        'limit',
+        'offset',
+        'samples'
+    ]
+
+    samples_keys = [
+        'sha256',
+        'sha1',
+        'md5',
+        'threatScore',
+        'firstSeen',
+        'lastSeen',
+        'visible',
+        'avresults',
+        'behaviors'
+    ]
+
+    assert_keys_in(resp_json, *search_keys)
+    assert_keys_in(resp_json['samples'][0], *samples_keys)
+
+def test_sample(inv):
+    resp_json = inv.sample('414e38ed0b5d507734361c2ba94f734252ca33b8259ca32334f32c4dba69b01c')
+
+    samples_keys = [
+        'sha256',
+        'sha1',
+        'md5',
+        'magicType',
+        'threatScore',
+        'size',
+        'firstSeen',
+        'lastSeen',
+        'visible',
+        'avresults',
+        'artifacts',
+        'samples',
+        'connections',
+        'behaviors'
+    ]
+
+    assert_keys_in(resp_json, *samples_keys)
+
+def test_sample_artifacts(inv):
+    resp_json = inv.sample_artifacts('414e38ed0b5d507734361c2ba94f734252ca33b8259ca32334f32c4dba69b01c')
+
+    search_keys = [
+        'totalResults',
+        'moreDataAvailable',
+        'limit',
+        'offset',
+        'artifacts'
+    ]
+
+    artifacts_keys = [
+        'sha256',
+        'sha1',
+        'md5',
+        'size',
+        'firstSeen',
+        'lastSeen',
+        'visible',
+        'direction',
+        'avresults',
+        'behaviors'
+    ]
+
+    assert_keys_in(resp_json, *search_keys)
+    assert_keys_in(resp_json['artifacts'][0], *artifacts_keys)
+
+def test_sample_connections(inv):
+    resp_json = inv.sample_connections('414e38ed0b5d507734361c2ba94f734252ca33b8259ca32334f32c4dba69b01c')
+
+    search_keys = [
+        'totalResults',
+        'moreDataAvailable',
+        'limit',
+        'offset',
+        'connections'
+    ]
+
+    connections_keys = [
+        'name',
+        'firstSeen',
+        'lastSeen',
+        'securityCategories',
+        'attacks',
+        'threatTypes',
+        'type',
+        'ips',
+        'urls'
+    ]
+
+    assert_keys_in(resp_json, *search_keys)
+    assert_keys_in(resp_json['connections'][0], *connections_keys)
+
+def test_sample_samples(inv):
+    resp_json = inv.sample_samples('befb538f7ee0903bd2ef783107b46f75bb2294f7c9598ba901eff35173fef360')
+
+    search_keys = [
+        'totalResults',
+        'moreDataAvailable',
+        'limit',
+        'offset',
+        'samples'
+    ]
+
+    samples_keys = [
+        'sha256',
+        'sha1',
+        'md5',
+        'magicType',
+        'threatScore',
+        'size',
+        'firstSeen',
+        'lastSeen',
+        'visible',
+        'direction',
+        'avresults',
+        'behaviors'
+    ]
+
+    assert_keys_in(resp_json, *search_keys)
+    assert_keys_in(resp_json['samples'][0], *samples_keys)
+
