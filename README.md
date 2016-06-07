@@ -1,7 +1,7 @@
 pyinvestigate
 =============
 
-Python module to interface with the [OpenDNS Investigate API](#https://docs.opendns.com/developer/investigate-api/)
+> Python module to interface with the [OpenDNS Investigate API](https://docs.opendns.com/developer/investigate-api/)
 
 # Installation
 `pyinvestigate` can be installed either with pip:
