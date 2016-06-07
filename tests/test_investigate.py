@@ -215,7 +215,7 @@ def test_ns_whois(inv):
     assert_keys_in(resp_json['auth1.opendns.com'], *whois_keys)
 
 def test_search(inv):
-    resp_json = inv.search('.*go[a-z]gle.com', start=datetime.timedelta(days=30), limit=100, include_category=True)
+    resp_json = inv.search('paypal.*', start=datetime.timedelta(days=1), limit=100, include_category=True)
 
     search_keys = [
         'matches', 'totalResults', 'limit', 'expression', 'moreDataAvailable'
@@ -358,4 +358,3 @@ def test_sample_samples(inv):
 
     assert_keys_in(resp_json, *search_keys)
     assert_keys_in(resp_json['samples'][0], *samples_keys)
-
