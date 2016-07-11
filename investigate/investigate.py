@@ -199,16 +199,16 @@ class Investigate(object):
         resp_json = self.get_parse(uri, params=params)
         return resp_json
 
-    def email_whois(self, emails):
+    def email_whois(self, emails, limit=None):
         '''Gets the domains that have been registered with a given email
         address
         '''
         if not isinstance(emails, list):
             uri = self._uris["whois_email"].format(emails)
-            params = {}
+            params = {'limit' : limit}
         else:
             uri = self._uris["whois_email"].format('')
-            params = {'emailList' : ','.join(emails)}
+            params = {'emailList' : ','.join(emails), 'limit' : limit}
 
         resp_json = self.get_parse(uri, params=params)
         return resp_json
