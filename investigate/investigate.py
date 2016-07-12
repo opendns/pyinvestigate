@@ -37,7 +37,8 @@ class Investigate(object):
             "tags":                 "domains/{}/latest_tags",
             "whois_email":          "whois/emails/{}",
             "whois_ns":             "whois/nameservers/{}",
-            "whois_domain":         "whois/{}/history",
+            "whois_domain":         "whois/{}",
+            "whois_domain_history": "whois/{}/history",
             "search":               "search/{}",
             "samples":              "samples/{}",
             "sample":               "sample/{}",
@@ -184,6 +185,17 @@ class Investigate(object):
         '''Gets whois information for a domain'''
         uri = self._uris["whois_domain"].format(domain)
         resp_json = self.get_parse(uri)
+        return resp_json
+
+    def domain_whois_history(self, domain, limit=None):
+        '''Gets whois history for a domain'''
+
+        params = dict()
+        if limit is not None:
+            params['limit'] = limit
+
+        uri = self._uris["whois_domain_history"].format(domain)
+        resp_json = self.get_parse(uri, params)
         return resp_json
 
     def ns_whois(self, nameservers):
