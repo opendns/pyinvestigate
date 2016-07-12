@@ -180,10 +180,15 @@ class Investigate(object):
         # parse out the domain names
         return [ val for d in resp_json for key, val in d.iteritems() if key == 'name' ]
 
-    def domain_whois(self, domain):
+    def domain_whois(self, domain, limit=None):
         '''Gets whois information for a domain'''
         uri = self._uris["whois_domain"].format(domain)
-        resp_json = self.get_parse(uri)
+
+        params = dict()
+        if limit is not None:
+            params['limit'] = limit
+
+        resp_json = self.get_parse(uri, params)
         return resp_json
 
     def ns_whois(self, nameservers):
