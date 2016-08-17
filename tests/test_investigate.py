@@ -114,19 +114,27 @@ def test_ip_rr_history(inv):
         assert_keys_in(rr_entry, *rr_keys)
 
 def test_latest_domains(inv):
-    resp_json = inv.latest_domains('46.161.41.43')
+    resp_json = inv.latest_domains('8.8.8.8')
     print("\nresp_json")
     pprint(resp_json)
     assert type(resp_json) is list
     assert len(resp_json) > 0
 
-def test_email_whois(inv):
+def test_email_whois1(inv):
     resp_json = inv.email_whois('test@example.com')
     print("\nresp_json")
     pprint(resp_json)
-    whois_keys = ["domains", "limit", "moreDataAvailable", "totalResults"]
+    whois_keys = ["domains", "limit", "moreDataAvailable", "totalResults", "offset"]
     assert_keys_in(resp_json, 'test@example.com')
     assert_keys_in(resp_json['test@example.com'], *whois_keys)
+
+def test_email_whois2(inv):
+    resp_json = inv.email_whois('admin@google.com', limit=10, offset=500)
+    print("\nresp_json")
+    pprint(resp_json)
+    whois_keys = ["domains", "limit", "moreDataAvailable", "totalResults", "offset"]
+    assert_keys_in(resp_json, 'admin@google.com')
+    assert_keys_in(resp_json['admin@google.com'], *whois_keys)
 
 def test_domain_whois(inv):
     resp_json = inv.domain_whois('opendns.com')
@@ -215,7 +223,7 @@ def test_domain_whois_history(inv):
 def test_ns_whois(inv):
     resp_json = inv.ns_whois('auth1.opendns.com')
     assert_keys_in(resp_json, 'auth1.opendns.com')
-    whois_keys = ["domains", "limit", "moreDataAvailable", "totalResults"]
+    whois_keys = ["domains", "limit", "moreDataAvailable", "totalResults", "offset"]
     assert_keys_in(resp_json['auth1.opendns.com'], *whois_keys)
 
 def test_search(inv):
