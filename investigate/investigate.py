@@ -14,6 +14,8 @@ class Investigate(object):
         "CNAME",
     ]
 
+    DEFAULT_LIMIT = None
+    DEFAULT_OFFSET = None
     IP_PATTERN = re.compile(r'(\d{1,3}\.){3}\d{1,3}')
 
     DOMAIN_ERR = ValueError("domains must be a string or a list of strings")
@@ -198,29 +200,29 @@ class Investigate(object):
         resp_json = self.get_parse(uri, params)
         return resp_json
 
-    def ns_whois(self, nameservers):
+    def ns_whois(self, nameservers, limit=DEFAULT_LIMIT, offset=DEFAULT_OFFSET):
         '''Gets the domains that have been registered with a nameserver or
         nameservers'''
         if not isinstance(nameservers, list):
             uri = self._uris["whois_ns"].format(nameservers)
-            params = {}
+            params = {'limit': limit, 'offset': offset}
         else:
             uri = self._uris["whois_ns"].format('')
-            params = {'emailList' : ','.join(nameservers)}
+            params = {'emailList' : ','.join(nameservers), 'limit': limit, 'offset': offset}
 
         resp_json = self.get_parse(uri, params=params)
         return resp_json
 
-    def email_whois(self, emails):
+    def email_whois(self, emails, limit=DEFAULT_LIMIT, offset=DEFAULT_OFFSET):
         '''Gets the domains that have been registered with a given email
         address
         '''
         if not isinstance(emails, list):
             uri = self._uris["whois_email"].format(emails)
-            params = {}
+            params = {'limit': limit, 'offset': offset}
         else:
             uri = self._uris["whois_email"].format('')
-            params = {'emailList' : ','.join(emails)}
+            params = {'emailList' : ','.join(emails), 'limit': limit, 'offset': offset}
 
         resp_json = self.get_parse(uri, params=params)
         return resp_json
