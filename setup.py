@@ -4,7 +4,7 @@ from setuptools import setup, find_packages  # Always prefer setuptools over dis
 
 setup(
     name='investigate',
-    version='1.2.2',
+    version='1.2.3',
     description='Python interface for the OpenDNS Investigate API',
     url='https://github.com/opendns/pyinvestigate',
     author='Skyler Hawthorne, Thibault Reuille',

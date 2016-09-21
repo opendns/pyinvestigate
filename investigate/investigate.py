@@ -16,6 +16,7 @@ class Investigate(object):
 
     DEFAULT_LIMIT = None
     DEFAULT_OFFSET = None
+    DEFAULT_SORT = None
     IP_PATTERN = re.compile(r'(\d{1,3}\.){3}\d{1,3}')
 
     DOMAIN_ERR = ValueError("domains must be a string or a list of strings")
@@ -200,29 +201,29 @@ class Investigate(object):
         resp_json = self.get_parse(uri, params)
         return resp_json
 
-    def ns_whois(self, nameservers, limit=DEFAULT_LIMIT, offset=DEFAULT_OFFSET):
+    def ns_whois(self, nameservers, limit=DEFAULT_LIMIT, offset=DEFAULT_OFFSET, sort_field=DEFAULT_SORT):
         '''Gets the domains that have been registered with a nameserver or
         nameservers'''
         if not isinstance(nameservers, list):
             uri = self._uris["whois_ns"].format(nameservers)
-            params = {'limit': limit, 'offset': offset}
+            params = {'limit': limit, 'offset': offset, 'sortField': sort_field}
         else:
             uri = self._uris["whois_ns"].format('')
-            params = {'emailList' : ','.join(nameservers), 'limit': limit, 'offset': offset}
+            params = {'emailList' : ','.join(nameservers), 'limit': limit, 'offset': offset, 'sortField': sort_field}
 
         resp_json = self.get_parse(uri, params=params)
         return resp_json
 
-    def email_whois(self, emails, limit=DEFAULT_LIMIT, offset=DEFAULT_OFFSET):
+    def email_whois(self, emails, limit=DEFAULT_LIMIT, offset=DEFAULT_OFFSET, sort_field=DEFAULT_SORT):
         '''Gets the domains that have been registered with a given email
         address
         '''
         if not isinstance(emails, list):
             uri = self._uris["whois_email"].format(emails)
-            params = {'limit': limit, 'offset': offset}
+            params = {'limit': limit, 'offset': offset, 'sortField': sort_field}
         else:
             uri = self._uris["whois_email"].format('')
-            params = {'emailList' : ','.join(emails), 'limit': limit, 'offset': offset}
+            params = {'emailList' : ','.join(emails), 'limit': limit, 'offset': offset, 'sortField': sort_field}
 
         resp_json = self.get_parse(uri, params=params)
         return resp_json
