@@ -422,3 +422,33 @@ def test_sample_samples(inv):
 
     assert_keys_in(resp_json, *search_keys)
     assert_keys_in(resp_json['samples'][0], *samples_keys)
+
+def test_as_for_ip(inv):
+    resp_json = inv.as_for_ip('208.67.222.222')
+
+    search_keys = [
+        'cidr',
+        'asn',
+        'ir',
+        'description',
+        'creation_date'
+    ]
+
+    assert_keys_in(resp_json[0], *search_keys)
+
+def test_prefixes_for_asn(inv):
+    resp_json = inv.prefixes_for_asn(36692)
+
+    search_keys = [
+        'cidr',
+        'geo'
+    ]
+
+    geo_keys = [
+        'country_name',
+        'country_code'
+    ]
+
+    assert_keys_in(resp_json[0], *search_keys)
+    assert_keys_in(resp_json[0]['geo'], *geo_keys)
+
