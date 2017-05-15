@@ -1,1 +1,1 @@
-from investigate import *
+from investigate.investigate import *

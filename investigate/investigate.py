@@ -1,7 +1,7 @@
 import json
 import re
 import requests
-import urlparse, urllib
+import urllib
 import datetime, time
 
 class Investigate(object):
@@ -57,7 +57,7 @@ class Investigate(object):
         '''A generic method to make GET requests to the OpenDNS Investigate API
         on the given URI.
         '''
-        return requests.get(urlparse.urljoin(Investigate.BASE_URL, uri),
+        return requests.get(urllib.parse.urljoin(Investigate.BASE_URL, uri),
             params=params, headers=self._auth_header, proxies=self.proxies
         )
 
@@ -66,7 +66,7 @@ class Investigate(object):
         on the given URI.
         '''
         return requests.post(
-            urlparse.urljoin(Investigate.BASE_URL, uri),
+            urllib.parse.urljoin(Investigate.BASE_URL, uri),
             params=params, data=data, headers=self._auth_header,
             proxies=self.proxies
         )
@@ -89,7 +89,7 @@ class Investigate(object):
         return self._request_parse(self.post, uri, params, data)
 
     def _get_categorization(self, domain, labels):
-        uri = urlparse.urljoin(self._uris['categorization'], domain)
+        uri = urllib.parse.urljoin(self._uris['categorization'], domain)
         params = {'showLabels': True} if labels else {}
         return self.get_parse(uri, params)
 
@@ -184,7 +184,7 @@ class Investigate(object):
         resp_json = self.get_parse(uri)
 
         # parse out the domain names
-        return [ val for d in resp_json for key, val in d.iteritems() if key == 'name' ]
+        return [ val for d in resp_json for key, val in d.items() if key == 'name' ]
 
     def domain_whois(self, domain):
         '''Gets whois information for a domain'''
@@ -250,7 +250,7 @@ class Investigate(object):
         if include_category is not None and isinstance(include_category, bool):
             params['includeCategory'] = str(include_category).lower()
 
-        uri = self._uris['search'].format(urllib.quote_plus(pattern))
+        uri = self._uris['search'].format(urllib.parse.quote_plus(pattern))
 
         return self.get_parse(uri, params)
 
