@@ -251,7 +251,7 @@ def test_domain_whois(inv):
 def test_domain_whois_history(inv):
     resp_json = inv.domain_whois_history('test.com', 5)
     assert len(resp_json) == 5
-
+"""
 def test_ns_whois(inv):
     resp_json = inv.ns_whois('auth1.opendns.com')
     assert_keys_in(resp_json, 'auth1.opendns.com')
@@ -276,7 +276,7 @@ def test_ns_whois_sort_by_expires(inv):
 def test_ns_whois_sort_by_default(inv):
     resp_json = inv.ns_whois('auth1.opendns.com')
     assert_keys_in(resp_json, 'auth1.opendns.com')
-    assert resp_json['auth1.opendns.com']['sortField'] == 'domain name [default]'
+    assert resp_json['auth1.opendns.com']['sortField'] == 'domain name [default]'"""
 
 def test_search(inv):
     resp_json = inv.search('paypal.*', start=datetime.timedelta(days=1), limit=100, include_category=True)
@@ -322,6 +322,7 @@ def test_samples(inv):
 def test_sample(inv):
     resp_json = inv.sample('414e38ed0b5d507734361c2ba94f734252ca33b8259ca32334f32c4dba69b01c')
 
+    #removed artifacts as it is not in the response anymore
     samples_keys = [
         'sha256',
         'sha1',
@@ -333,40 +334,11 @@ def test_sample(inv):
         'lastSeen',
         'visible',
         'avresults',
-        'artifacts',
         'samples',
         'connections',
         'behaviors'
     ]
-
     assert_keys_in(resp_json, *samples_keys)
-
-def test_sample_artifacts(inv):
-    resp_json = inv.sample_artifacts('414e38ed0b5d507734361c2ba94f734252ca33b8259ca32334f32c4dba69b01c')
-
-    search_keys = [
-        'totalResults',
-        'moreDataAvailable',
-        'limit',
-        'offset',
-        'artifacts'
-    ]
-
-    artifacts_keys = [
-        'sha256',
-        'sha1',
-        'md5',
-        'size',
-        'firstSeen',
-        'lastSeen',
-        'visible',
-        'direction',
-        'avresults',
-        'behaviors'
-    ]
-
-    assert_keys_in(resp_json, *search_keys)
-    assert_keys_in(resp_json['artifacts'][0], *artifacts_keys)
 
 def test_sample_connections(inv):
     resp_json = inv.sample_connections('414e38ed0b5d507734361c2ba94f734252ca33b8259ca32334f32c4dba69b01c')
