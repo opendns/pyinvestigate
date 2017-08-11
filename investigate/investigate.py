@@ -5,7 +5,7 @@ import urlparse, urllib
 import datetime, time
 
 class Investigate(object):
-    BASE_URL = 'https://investigate.api.opendns.com/'
+    BASE_URL = 'https://investigate.api.umbrella.com/'
     SUPPORTED_DNS_TYPES = [
         "A",
         "NS",
@@ -105,7 +105,7 @@ class Investigate(object):
         Setting 'labels' to True will give back categorizations in human-readable
         form.
 
-        For more detail, see https://sgraph.opendns.com/docs/api#categorization
+        For more detail, see https://investigate.umbrella.com/docs/api#categorization
         '''
         if type(domains) is str:
             return self._get_categorization(domains, labels)
@@ -117,7 +117,7 @@ class Investigate(object):
     def cooccurrences(self, domain):
         '''Get the cooccurrences of the given domain.
 
-        For details, see https://sgraph.opendns.com/docs/api#co-occurrences
+        For details, see https://investigate.umbrella.com/docs/api#co-occurrences
         '''
         uri = self._uris["cooccurrences"].format(domain)
         return self.get_parse(uri)
@@ -125,7 +125,7 @@ class Investigate(object):
     def related(self, domain):
         '''Get the related domains of the given domain.
 
-        For details, see https://sgraph.opendns.com/docs/api#relatedDomains
+        For details, see https://investigate.umbrella.com/docs/api#relatedDomains
         '''
         uri = self._uris["related"].format(domain)
         return self.get_parse(uri)
@@ -133,7 +133,7 @@ class Investigate(object):
     def security(self, domain):
         '''Get the Security Information for the given domain.
 
-        For details, see https://sgraph.opendns.com/docs/api#securityInfo
+        For details, see https://investigate.umbrella.com/docs/api#securityInfo
         '''
         uri = self._uris["security"].format(domain)
         return self.get_parse(uri)
@@ -141,7 +141,7 @@ class Investigate(object):
     def domain_tags(self, domain):
         '''Get the domain tagging dates for the given domain.
 
-        For details, see https://sgraph.opendns.com/docs/api#latest_tags
+        For details, see https://investigate.umbrella.com/docs/api#latest_tags
         '''
         uri = self._uris["tags"].format(domain)
         return self.get_parse(uri)
@@ -161,7 +161,7 @@ class Investigate(object):
 
         A, NS, MX, TXT, CNAME
 
-        For details, see https://sgraph.opendns.com/docs/api#dnsrr_domain
+        For details, see https://investigate.umbrella.com/docs/api#dnsrr_domain
         '''
         if query_type not in Investigate.SUPPORTED_DNS_TYPES:
             raise Investigate.UNSUPPORTED_DNS_QUERY

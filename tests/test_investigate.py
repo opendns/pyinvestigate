@@ -17,7 +17,7 @@ def test_categorization(inv):
     assert_keys_in(resp_json[domain], *keys)
 
     # test post with several domains
-    domains = ['www.amazon.com', 'www.opendns.com', 'bibikun.ru']
+    domains = ['www.amazon.com', 'www.umbrella.com', 'bibikun.ru']
     resp_json = inv.categorization(domains)
     assert_keys_in(resp_json, *domains)
     for d in domains:
@@ -169,7 +169,7 @@ def test_email_whois_sort_by_default(inv):
     assert resp_json['admin@google.com']['sortField'] == 'domain name [default]'
 
 def test_domain_whois(inv):
-    resp_json = inv.domain_whois('opendns.com')
+    resp_json = inv.domain_whois('umbrella.com')
     whois_keys = [
         'registrantFaxExt',
         'administrativeContactPostalCode',
@@ -253,30 +253,30 @@ def test_domain_whois_history(inv):
     assert len(resp_json) == 5
 
 def test_ns_whois(inv):
-    resp_json = inv.ns_whois('auth1.opendns.com')
-    assert_keys_in(resp_json, 'auth1.opendns.com')
+    resp_json = inv.ns_whois('auth1.umbrella.com')
+    assert_keys_in(resp_json, 'auth1.umbrella.com')
     whois_keys = ["domains", "limit", "moreDataAvailable", "totalResults", "offset"]
-    assert_keys_in(resp_json['auth1.opendns.com'], *whois_keys)
+    assert_keys_in(resp_json['auth1.umbrella.com'], *whois_keys)
 
 def test_ns_whois_sort_by_created(inv):
-    resp_json = inv.ns_whois('auth1.opendns.com', sort_field='created')
-    assert_keys_in(resp_json, 'auth1.opendns.com')
-    assert resp_json['auth1.opendns.com']['sortField'] == 'created'
+    resp_json = inv.ns_whois('auth1.umbrella.com', sort_field='created')
+    assert_keys_in(resp_json, 'auth1.umbrella.com')
+    assert resp_json['auth1.umbrella.com']['sortField'] == 'created'
 
 def test_ns_whois_sort_by_updated(inv):
-    resp_json = inv.ns_whois('auth1.opendns.com', sort_field='updated')
-    assert_keys_in(resp_json, 'auth1.opendns.com')
-    assert resp_json['auth1.opendns.com']['sortField'] == 'updated'
+    resp_json = inv.ns_whois('auth1.umbrella.com', sort_field='updated')
+    assert_keys_in(resp_json, 'auth1.umbrella.com')
+    assert resp_json['auth1.umbrella.com']['sortField'] == 'updated'
 
 def test_ns_whois_sort_by_expires(inv):
-    resp_json = inv.ns_whois('auth1.opendns.com', sort_field='expires')
-    assert_keys_in(resp_json, 'auth1.opendns.com')
-    assert resp_json['auth1.opendns.com']['sortField'] == 'expires'
+    resp_json = inv.ns_whois('auth1.umbrella.com', sort_field='expires')
+    assert_keys_in(resp_json, 'auth1.umbrella.com')
+    assert resp_json['auth1.umbrella.com']['sortField'] == 'expires'
 
 def test_ns_whois_sort_by_default(inv):
-    resp_json = inv.ns_whois('auth1.opendns.com')
-    assert_keys_in(resp_json, 'auth1.opendns.com')
-    assert resp_json['auth1.opendns.com']['sortField'] == 'domain name [default]'
+    resp_json = inv.ns_whois('auth1.umbrella.com')
+    assert_keys_in(resp_json, 'auth1.umbrella.com')
+    assert resp_json['auth1.umbrella.com']['sortField'] == 'domain name [default]'
 
 def test_search(inv):
     resp_json = inv.search('paypal.*', start=datetime.timedelta(days=1), limit=100, include_category=True)

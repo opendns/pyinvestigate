@@ -1,7 +1,7 @@
 pyinvestigate
 =============
 
-> Python module to interface with the [OpenDNS Investigate API](https://docs.opendns.com/developer/investigate-api/)
+> Python module to interface with the [OpenDNS Investigate API](https://docs.umbrella.com/developer/investigate-api/)
 
 # Installation
 `pyinvestigate` can be installed either with pip:
@@ -18,7 +18,7 @@ $ ./setup.py install
 
 # Basic Usage
 To use, simply build an `Investigate` object with your Investigate API key,
-which can be found [here](https://sgraph.opendns.com/tokens-view).
+which can be found [here](https://investigate.umbrella.com/tokens-view).
 
 ```python
 >>> import investigate
@@ -30,9 +30,9 @@ which can be found [here](https://sgraph.opendns.com/tokens-view).
 {u'amazon.com': {u'status': 1, u'content_categories': [u'8'], u'security_categories': []}}
 
 # Categorization and Status on a list of domains with labels
->>> domains = ['www.amazon.com', 'www.opendns.com', 'bibikun.ru']
+>>> domains = ['www.amazon.com', 'www.umbrella.com', 'bibikun.ru']
 >>> inv.categorization(domains, labels=True)
-{u'www.opendns.com': {u'status': 1, u'content_categories': [], u'security_categories': []}, u'www.amazon.com': {u'status': 1, u'content_categories': [u'Ecommerce/Shopping'], u'security_categories': []}, u'bibikun.ru': {u'status': -1, u'content_categories': [], u'security_categories': [u'Malware']}}
+{u'www.umbrella.com': {u'status': 1, u'content_categories': [], u'security_categories': []}, u'www.amazon.com': {u'status': 1, u'content_categories': [u'Ecommerce/Shopping'], u'security_categories': []}, u'bibikun.ru': {u'status': -1, u'content_categories': [], u'security_categories': [u'Malware']}}
 
 # Co-occurrences
 >>> inv.cooccurrences('test.com')
@@ -68,13 +68,13 @@ which can be found [here](https://sgraph.opendns.com/tokens-view).
 ...
 
 # WHOIS record history for a domain
->>> inv.domain_whois('opendns.com')
+>>> inv.domain_whois('umbrella.com')
 [{u'registrantFaxExt': u'', u'administrativeContactPostalCode': u'94105', u'zoneContactCity': u'', u'addresses': [u'410 townsend st. suite 250'], u'billingContactState': u'', u'technicalContactCountry': u'UNITED STATES', u'auditUpdatedDate': u'2014-02-16 08:00:00 UTC', u'technicalContactFax': u'', u'technicalContactTelephone': u'0014153443118', u'billingContactStreet': [], u'registrantFax': u'', u'technicalContactPostalCode': u'94105', u'registrantOrganization': u'OpenDNS', u'zoneContactPostalCode': u'', u'technicalContactState': u'California', u'registrantState': u'California', u'administrativeContactName': u'OpenDNS Hostmaster', u'billingContactFaxExt': u'',
 ...
 
 # Domains associated with a nameserver
->>> inv.ns_whois('auth1.opendns.com')
-{u'auth1.opendns.com': {u'domains': [{u'current': True, u'domain': u'1800go.net'}, {u'current': True, u'domain': u'302directmedia.com'}, {u'current': False, u'domain': u'abboveactive.com'}, {u'current': False, u'domain': u'absurdant.com'}, {u'current': True, u'domain': u'account-updateinfo.com'}, {u'current': True, u'domain': u'account-updateinfo.net'}, {u'current': True, u'domain': u'account-updateinfo.org'}, {u'current': False, u'domain': u'activeclassic.com'}, {u'current': False, u'domain': u'advisorswise.com'}, {u'current': True, u'domain': u'afasterinternet.net'}, {u'current': True, u'domain': u'afasterinternet.org'}, {u'current': False, u'domain': u'agedwindow.com'}, {u'current': True, u'domain': u'airmor.com'}, {u'current': True, u'domain': u'airmor.net'}, {u'current': True, u'domain': u'airmor.org'},
+>>> inv.ns_whois('auth1.umbrella.com')
+{u'auth1.umbrella.com': {u'domains': [{u'current': True, u'domain': u'1800go.net'}, {u'current': True, u'domain': u'302directmedia.com'}, {u'current': False, u'domain': u'abboveactive.com'}, {u'current': False, u'domain': u'absurdant.com'}, {u'current': True, u'domain': u'account-updateinfo.com'}, {u'current': True, u'domain': u'account-updateinfo.net'}, {u'current': True, u'domain': u'account-updateinfo.org'}, {u'current': False, u'domain': u'activeclassic.com'}, {u'current': False, u'domain': u'advisorswise.com'}, {u'current': True, u'domain': u'afasterinternet.net'}, {u'current': True, u'domain': u'afasterinternet.org'}, {u'current': False, u'domain': u'agedwindow.com'}, {u'current': True, u'domain': u'airmor.com'}, {u'current': True, u'domain': u'airmor.net'}, {u'current': True, u'domain': u'airmor.org'},
 ...
 
 # Search newly observed domains by regex pattern
