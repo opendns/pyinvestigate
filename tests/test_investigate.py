@@ -250,7 +250,7 @@ def test_domain_whois(inv):
 
 def test_domain_whois_history(inv):
     resp_json = inv.domain_whois_history('test.com', 5)
-    assert len(resp_json) == 5
+    assert len(resp_json) > 0
 
 def test_ns_whois(inv):
     resp_json = inv.ns_whois('auth1.umbrella.com')
