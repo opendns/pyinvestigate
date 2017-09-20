@@ -52,12 +52,13 @@ class Investigate(object):
             "prefixes_for_asn":     "bgp_routes/asn/{}/prefixes_for_asn.json"
         }
         self._auth_header = {"Authorization": "Bearer " + self.api_key}
+        self._session = requests.Session()
 
     def get(self, uri, params={}):
         '''A generic method to make GET requests to the OpenDNS Investigate API
         on the given URI.
         '''
-        return requests.get(urlparse.urljoin(Investigate.BASE_URL, uri),
+        return self._session.get(urlparse.urljoin(Investigate.BASE_URL, uri),
             params=params, headers=self._auth_header, proxies=self.proxies
         )
 
@@ -65,7 +66,7 @@ class Investigate(object):
         '''A generic method to make POST requests to the OpenDNS Investigate API
         on the given URI.
         '''
-        return requests.post(
+        return self._session.post(
             urlparse.urljoin(Investigate.BASE_URL, uri),
             params=params, data=data, headers=self._auth_header,
             proxies=self.proxies
