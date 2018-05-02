@@ -1,8 +1,13 @@
+from future.standard_library import install_aliases
+install_aliases()
+
 import json
 import re
 import requests
-import urlparse, urllib
 import datetime, time
+from future.utils import iteritems
+from urllib.parse import urljoin, quote_plus
+
 
 class Investigate(object):
     BASE_URL = 'https://investigate.api.umbrella.com/'
@@ -58,7 +63,7 @@ class Investigate(object):
         '''A generic method to make GET requests to the OpenDNS Investigate API
         on the given URI.
         '''
-        return self._session.get(urlparse.urljoin(Investigate.BASE_URL, uri),
+        return self._session.get(urljoin(Investigate.BASE_URL, uri),
             params=params, headers=self._auth_header, proxies=self.proxies
         )
 
@@ -67,7 +72,7 @@ class Investigate(object):
         on the given URI.
         '''
         return self._session.post(
-            urlparse.urljoin(Investigate.BASE_URL, uri),
+            urljoin(Investigate.BASE_URL, uri),
             params=params, data=data, headers=self._auth_header,
             proxies=self.proxies
         )
@@ -90,7 +95,7 @@ class Investigate(object):
         return self._request_parse(self.post, uri, params, data)
 
     def _get_categorization(self, domain, labels):
-        uri = urlparse.urljoin(self._uris['categorization'], domain)
+        uri = urljoin(self._uris['categorization'], domain)
         params = {'showLabels': True} if labels else {}
         return self.get_parse(uri, params)
 
@@ -185,7 +190,7 @@ class Investigate(object):
         resp_json = self.get_parse(uri)
 
         # parse out the domain names
-        return [ val for d in resp_json for key, val in d.iteritems() if key == 'name' ]
+        return [ val for d in resp_json for key, val in iteritems(d) if key == 'name' ]
 
     def domain_whois(self, domain):
         '''Gets whois information for a domain'''
@@ -233,7 +238,7 @@ class Investigate(object):
 
     def search(self, pattern, start=None, limit=None, include_category=None):
         '''Searches for domains that match a given pattern'''
-        
+
         params = dict()
 
         if start is None:
@@ -245,13 +250,13 @@ class Investigate(object):
             params['start'] = int(time.mktime(start.timetuple()) * 1000)
         else:
             raise Investigate.SEARCH_ERR
-        
+
         if limit is not None and isinstance(limit, int):
             params['limit'] = limit
         if include_category is not None and isinstance(include_category, bool):
             params['includeCategory'] = str(include_category).lower()
 
-        uri = self._uris['search'].format(urllib.quote_plus(pattern))
+        uri = self._uris['search'].format(quote_plus(pattern))
 
         return self.get_parse(uri, params)
 
