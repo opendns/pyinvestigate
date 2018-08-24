@@ -63,12 +63,6 @@ def test_security(inv):
     resp_json = inv.security("test.com")
     assert_keys_in(resp_json, *keys)
 
-def test_domain_tags(inv):
-    resp_json = inv.domain_tags('bibikun.ru')
-    for tag_entry in resp_json:
-        assert_keys_in(tag_entry, 'category', 'period', 'url')
-        assert_keys_in(tag_entry['period'], 'begin', 'end')
-
 def test_domain_rr_history(inv):
     features_keys = [
         "age", "ttls_min", "ttls_max", "ttls_mean", "ttls_median", "ttls_stddev",
@@ -333,7 +327,6 @@ def test_sample(inv):
         'lastSeen',
         'visible',
         'avresults',
-        'artifacts',
         'samples',
         'connections',
         'behaviors'
@@ -451,4 +444,16 @@ def test_prefixes_for_asn(inv):
 
     assert_keys_in(resp_json[0], *search_keys)
     assert_keys_in(resp_json[0]['geo'], *geo_keys)
+
+def test_timeline(inv):
+    resp_json = inv.timeline('internetbadguys.com')
+
+    search_keys = [
+        'categories',
+        'attacks',
+        'threatTypes', 
+        'timestamp'
+    ]
+
+    assert_keys_in(resp_json[0], *search_keys)
 

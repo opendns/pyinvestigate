@@ -42,7 +42,6 @@ class Investigate(object):
             "latest_domains":       "ips/{}/latest_domains",
             "related":              "links/name/{}.json",
             "security":             "security/name/{}.json",
-            "tags":                 "domains/{}/latest_tags",
             "whois_email":          "whois/emails/{}",
             "whois_ns":             "whois/nameservers/{}",
             "whois_domain":         "whois/{}",
@@ -54,7 +53,8 @@ class Investigate(object):
             "sample_connections":   "sample/{}/connections",
             "sample_samples":       "sample/{}/samples",
             "as_for_ip":            "bgp_routes/ip/{}/as_for_ip.json",
-            "prefixes_for_asn":     "bgp_routes/asn/{}/prefixes_for_asn.json"
+            "prefixes_for_asn":     "bgp_routes/asn/{}/prefixes_for_asn.json",
+            "timeline":             "timeline/{}"
         }
         self._auth_header = {"Authorization": "Bearer " + self.api_key}
         self._session = requests.Session()
@@ -142,14 +142,6 @@ class Investigate(object):
         For details, see https://investigate.umbrella.com/docs/api#securityInfo
         '''
         uri = self._uris["security"].format(domain)
-        return self.get_parse(uri)
-
-    def domain_tags(self, domain):
-        '''Get the domain tagging dates for the given domain.
-
-        For details, see https://investigate.umbrella.com/docs/api#latest_tags
-        '''
-        uri = self._uris["tags"].format(domain)
         return self.get_parse(uri)
 
     def _domain_rr_history(self, domain, query_type):
@@ -317,6 +309,16 @@ class Investigate(object):
         '''Gets the AS information for a given ASN. Return the CIDR and geolocation associated with the AS.'''
 
         uri = self._uris["prefixes_for_asn"].format(asn)
+        resp_json = self.get_parse(uri)
+
+        return resp_json
+
+    def timeline(self, uri):
+        '''Get the domain tagging timeline for a given uri. 
+        Could be a domain, ip, or url.
+        For details, see https://docs.umbrella.com/investigate-api/docs/timeline
+        '''
+        uri = self._uris["timeline"].format(uri)
         resp_json = self.get_parse(uri)
 
         return resp_json
