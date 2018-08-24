@@ -11,3 +11,13 @@ All requests are now made via a
 [requests session](http://docs.python-requests.org/en/master/user/advanced/),
 so the lib does not make new connections for each request. This should
 significantly improve performance when doing lots of requests.
+
+## [1.4.0] 2017-09-20
+### Changed
+
+Make library compatible with both python 2.x and python 3.x. 
+
+## [1.5.0] 2017-09-20
+### Changed
+
+Added timeline endpoint to library, cleaned up deprecated endpoints. 

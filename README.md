@@ -107,4 +107,8 @@ which can be found [here](https://investigate.umbrella.com/tokens-view).
 {u'limit': 10, u'totalResults': 10, u'moreDataAvailable': True, u'samples': [{u'magicType': u'PE32 executable (GUI) Intel 80386, for MS Windows', u'behaviors': [], u'direction': u'IN', u'sha1': u'c5a36cb704d8598d6cd80f449bea13db070b1633', u'lastSeen': 1463524837000, u'threatScore': 95, u'visible': True, u'firstSeen': 1463524837000, u'sha256': u'cad8c19af7476f7bf1f2516fc694081f99e40e550cc9db87683b06ed84e9a1dc', u'avresults': [], u'md5': u'20ceea3841cef8505873c1c05088becd', u'size': 1056404}, {u'magicType': u'PE32 executable (GUI) Intel 80386, for MS Windows', u'behaviors': [], u'direction': u'IN', u'sha1': u'fbf5dbadb7d083c3f7c7a33c2c86fe2d15e312cb', u'lastSeen': 1463448118000, u'threatScore': 90, u'visible': True, u'firstSeen': 1463448118000, u'sha256': u'f4dbbebdfa4fd0c9a54331c5b0b85613b231237909137d5c2567267282ffbebb',
 ...
 
+# Domain Tagging Timeline of a domain
+>>> inv.timeline('internetbadguys.com')
+[{"categories":[],"attacks":[],"threatTypes":[],"timestamp":1519932936460},{"categories":["Sinkhole"],"attacks":[],"threatTypes":[],"timestamp":1519932917443},{"categories":[],"attacks":[],"threatTypes":[],"timestamp":1519932012895},{"categories":["Sinkhole"],"attacks":[],"threatTypes":[],"timestamp":1519931932123},{"categories":[],"attacks":[],"threatTypes":[],"timestamp":1519927890205},{"categories":["High Risk Sites and Locations"],"attacks":[],"threatTypes":[],"timestamp":1519765563160},{"categories":[],"attacks":[],"threatTypes":[],"timestamp":1519765359821},{"categories":["Malware"],"attacks":[],"threatTypes":["APT"],"timestamp":1519765346784},{"categories":[],"attacks":[],"threatTypes":[],"timestamp":1497915919501}]
+
 ```
