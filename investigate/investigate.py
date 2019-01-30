@@ -54,7 +54,8 @@ class Investigate(object):
             "sample_samples":       "sample/{}/samples",
             "as_for_ip":            "bgp_routes/ip/{}/as_for_ip.json",
             "prefixes_for_asn":     "bgp_routes/asn/{}/prefixes_for_asn.json",
-            "timeline":             "timeline/{}"
+            "timeline":             "timeline/{}",
+            "risk-score":           "domains/risk-score/{}"
         }
         self._auth_header = {"Authorization": "Bearer " + self.api_key}
         self._session = requests.Session()
@@ -322,3 +323,14 @@ class Investigate(object):
         resp_json = self.get_parse(uri)
 
         return resp_json
+
+    def risk_score(self, domain):
+        '''Get sthe Umbrella Investigate Risk Score for the given domain.
+        For details see https://docs.umbrella.com/investigate-api/docs/security-information-for-a-domain-1#section-risk-score-for-a-domain
+        '''
+
+        if type(domain) is str:
+            uri = self._uris["risk-score"].format(domain)
+            return self.get_parse(uri)
+        else:
+            raise Investigate.DOMAIN_ERR

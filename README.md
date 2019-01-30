@@ -111,4 +111,7 @@ which can be found [here](https://investigate.umbrella.com/tokens-view).
 >>> inv.timeline('internetbadguys.com')
 [{"categories":[],"attacks":[],"threatTypes":[],"timestamp":1519932936460},{"categories":["Sinkhole"],"attacks":[],"threatTypes":[],"timestamp":1519932917443},{"categories":[],"attacks":[],"threatTypes":[],"timestamp":1519932012895},{"categories":["Sinkhole"],"attacks":[],"threatTypes":[],"timestamp":1519931932123},{"categories":[],"attacks":[],"threatTypes":[],"timestamp":1519927890205},{"categories":["High Risk Sites and Locations"],"attacks":[],"threatTypes":[],"timestamp":1519765563160},{"categories":[],"attacks":[],"threatTypes":[],"timestamp":1519765359821},{"categories":["Malware"],"attacks":[],"threatTypes":["APT"],"timestamp":1519765346784},{"categories":[],"attacks":[],"threatTypes":[],"timestamp":1497915919501}]
 
+# Umbrella Investigate Risk Score
+>>> inv.timeline('test.com')
+{'risk_score': 2}
 ```

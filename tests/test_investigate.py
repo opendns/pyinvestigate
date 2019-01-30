@@ -457,3 +457,10 @@ def test_timeline(inv):
 
     assert_keys_in(resp_json[0], *search_keys)
 
+def test_risk_score(inv):
+    resp_json = inv.risk_score("test.com")
+
+    keys = ["risk_score"]
+
+    assert_keys_in(resp_json, *keys)
+
