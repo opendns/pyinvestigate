@@ -457,3 +457,157 @@ def test_timeline(inv):
 
     assert_keys_in(resp_json[0], *search_keys)
 
+def test_pdns_domain(inv):
+    resp_json = inv.pdns_domain('coinhive.com')
+
+    search_keys = [
+        'records',
+        'pageInfo',
+        'recordInfo'
+    ]
+
+    records_keys = [
+        'minTtl',
+        'maxTtl',
+        'firstSeen',
+        'lastSeen',
+        'name',
+        'type',
+        'rr',
+        'securityCategories',
+        'contentCategories',
+        'firstSeenISO',
+        'lastSeenISO'
+    ]
+
+    pageInfo_keys = [
+        'hasMoreRecords',
+        'offset',
+        'limit',
+        'totalNumRecords'
+    ]
+    assert_keys_in(resp_json, *search_keys)
+    assert_keys_in(resp_json['records'][0], *records_keys)
+    assert_keys_in(resp_json['pageInfo'], *pageInfo_keys)
+
+def test_pdns_name(inv):
+    resp_json = inv.pdns_name('coinhive.com')
+
+    search_keys = [
+        'records',
+        'pageInfo',
+        'recordInfo'
+    ]
+
+    records_keys = [
+        'minTtl',
+        'maxTtl',
+        'firstSeen',
+        'lastSeen',
+        'name',
+        'type',
+        'rr',
+        'securityCategories',
+        'contentCategories',
+        'firstSeenISO',
+        'lastSeenISO'
+    ]
+
+    pageInfo_keys = [
+        'hasMoreRecords',
+        'offset',
+        'limit',
+        'totalNumRecords'
+    ]
+
+    assert_keys_in(resp_json, *search_keys)
+    assert_keys_in(resp_json['pageInfo'], *pageInfo_keys)
+    assert_keys_in(resp_json['records'][0], *records_keys)
+
+def test_pdns_ip(inv):
+    resp_json = inv.pdns_ip('146.112.61.104')
+
+    search_keys = [
+        'records',
+        'pageInfo',
+        'recordInfo'
+    ]
+
+    records_keys = [
+        'minTtl',
+        'maxTtl',
+        'firstSeen',
+        'lastSeen',
+        'name',
+        'type',
+        'rr',
+        'securityCategories',
+        'contentCategories',
+        'firstSeenISO',
+        'lastSeenISO'
+    ]
+
+    pageInfo_keys = [
+        'hasMoreRecords',
+        'offset',
+        'limit',
+        'totalNumRecords'
+    ]
+
+    assert_keys_in(resp_json, *search_keys)
+    assert_keys_in(resp_json['pageInfo'], *pageInfo_keys)
+    assert_keys_in(resp_json['records'][0], *records_keys)
+
+def test_pdns_timeline(inv):
+    resp_json = inv.pdns_timeline('umbrella.com')
+
+    search_keys = [
+        'date',
+        'dnsData'
+    ]
+
+    assert_keys_in(resp_json[0], *search_keys)
+
+def test_pdns_raw(inv):
+    resp_json = inv.pdns_raw('google')
+
+    search_keys = [
+        'records',
+        'pageInfo',
+        'recordInfo'
+    ]
+
+    records_keys = [
+        'minTtl',
+        'maxTtl',
+        'firstSeen',
+        'lastSeen',
+        'name',
+        'type',
+        'rr',
+        'securityCategories',
+        'contentCategories',
+        'firstSeenISO',
+        'lastSeenISO'
+    ]
+
+    pageInfo_keys = [
+        'hasMoreRecords',
+        'offset',
+        'limit',
+        'totalNumRecords'
+    ]
+
+    assert_keys_in(resp_json, *search_keys)
+    assert_keys_in(resp_json['pageInfo'], *pageInfo_keys)
+    assert_keys_in(resp_json['records'][0], *records_keys)
+
+def test_domian_volume(inv):
+    resp_json = inv.domain_volume('umbrella.com', start=datetime.timedelta(days=1), match='component')
+
+    search_keys = [
+        'dates',
+        'queries',
+    ]
+
+    assert_keys_in(resp_json, *search_keys)

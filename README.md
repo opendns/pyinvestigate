@@ -111,4 +111,28 @@ which can be found [here](https://investigate.umbrella.com/tokens-view).
 >>> inv.timeline('internetbadguys.com')
 [{"categories":[],"attacks":[],"threatTypes":[],"timestamp":1519932936460},{"categories":["Sinkhole"],"attacks":[],"threatTypes":[],"timestamp":1519932917443},{"categories":[],"attacks":[],"threatTypes":[],"timestamp":1519932012895},{"categories":["Sinkhole"],"attacks":[],"threatTypes":[],"timestamp":1519931932123},{"categories":[],"attacks":[],"threatTypes":[],"timestamp":1519927890205},{"categories":["High Risk Sites and Locations"],"attacks":[],"threatTypes":[],"timestamp":1519765563160},{"categories":[],"attacks":[],"threatTypes":[],"timestamp":1519765359821},{"categories":["Malware"],"attacks":[],"threatTypes":["APT"],"timestamp":1519765346784},{"categories":[],"attacks":[],"threatTypes":[],"timestamp":1497915919501}]
 
+# Resource Record (RR) data for DNS responses, and categorization data for domain name.
+>>> inv.pdns_domain('coinhive.com')
+{u'records': [{u'name': u'coinhive.com', u'rr': u'opcnhv.me.', u'contentCategories': [], u'securityCategories': [], u'maxTtl': 1799, u'minTtl': 1799, u'firstSeenISO': u'2019-01-18T15:20Z', u'lastSeenISO': u'2019-05-03T22:38Z', u'type': u'CNAME', u'firstSeen': 1547824800, u'lastSeen': 1556923133}], u'pageInfo': {u'totalNumRecords': 7, u'limit': 1, u'hasMoreRecords': True, u'offset': 0}, u'recordInfo': {u'maxTtl': 1799, u'minTtl': 1799}}
+
+# DNS queries and categorization data.
+>>> inv.pdns_name('coinhive.com')
+{u'records': [{u'name': u'coinhive.com', u'rr': u'"ca3-0b4b071fd5a9470ab982a0b913b47a3d"', u'contentCategories': [], u'securityCategories': [], u'maxTtl': 300, u'minTtl': 300, u'firstSeenISO': u'2019-05-03T20:04Z', u'lastSeenISO': u'2019-05-23T02:35Z', u'type': u'TXT', u'firstSeen': 1556913893, u'lastSeen': 1558578914}], u'pageInfo': {u'totalNumRecords': 30, u'limit': 1, u'hasMoreRecords': True, u'offset': 0}, u'recordInfo': {u'maxTtl': 300, u'minTtl': 300}}
+
+# Resource Record (RR) data for DNS responses, and categorization data for IP address.
+>>> inv.pdns_ip('146.112.61.104')
+{u'records': [{u'name': u'146.112.61.104', u'rr': u'hit-block.opendns.com.', u'contentCategories': [u'Software/Technology'], u'securityCategories': [], u'maxTtl': 3600, u'minTtl': 3600, u'firstSeenISO': u'2018-12-09T20:47Z', u'lastSeenISO': u'2019-05-23T11:31Z', u'type': u'A', u'firstSeen': 1544388420, u'lastSeen': 1558611062}], u'pageInfo': {u'totalNumRecords': 3, u'limit': 1, u'hasMoreRecords': True, u'offset': 0}, u'recordInfo': {u'maxTtl': 3600, u'minTtl': 3600}}
+
+# Passive DNS and categorization history for a domain name.
+>>> inv.pdns_timeline('umbrella.com')
+[{u'date': u'2017-07-24', u'dnsData': [{u'recordType': u'A', u'ipData': {u'startSeen': [u'67.215.70.42']}}]}, {u'date': u'2016-11-16', u'dnsData': [{u'recordType': u'A', u'ipData': {u'startSeen': [u'67.215.92.219']}}]}, {u'date': u'2014-10-31', u'dnsData': [{u'recordType': u'A', u'ipData': {u'startSeen': [u'67.215.92.220']}}]}, {u'date': u'2014-06-23', u'dnsData': [{u'recordType': u'A', u'ipData': {u'startSeen': [u'67.215.92.217']}}]}]
+
+# Passive DNS and categorization data for TXT records.
+>>> inv.pdns_raw('cisco')
+{u'records': [{u'name': u'"cisco"', u'rr': u'ethswitch101.scss.tcd.ie.', u'contentCategories': [u'Educational Institutions'], u'securityCategories': [], u'maxTtl': 300, u'minTtl': 300, u'firstSeenISO': u'2019-05-15T17:05Z', u'lastSeenISO': u'2019-05-15T17:05Z', u'type': u'TXT', u'firstSeen': 1557939913, u'lastSeen': 1557939913}], u'pageInfo': {u'totalNumRecords': 1, u'limit': None, u'hasMoreRecords': False, u'offset': 0}, u'recordInfo': {u'maxTtl': 300, u'minTtl': 300}}
+
+# DNS queries made per hour to specified domain.
+>>> import datetime
+>>> inv.domain_volume('umbrella.com', start=datetime.timedelta(days=5), stop=datetime.timedelta(days=2), match="exact")
+{u'dates': [1558328400000, 1558587600000], u'queries': [14006, 13971, 14837, 15076, 15024, 15205, 16029, 19001, 21547, 23152, 23638, 22269, 21405, 22077, 27304, 28948, 22575, 17526, 16317, 15743, 15016, 14591, 15196, 15028, 15808, 16381, 17149, 17615, 17824, 16874, 17018, 20468, 23474, 23458, 23050, 23491, 27228, 23572, 23050, 22005, 19410, 17046, 15750, 14822, 14725, 14441, 13867, 14266, 14496, 14973, 15096, 14940, 15101, 15006, 16303, 18729, 23021, 23639, 23018, 22303, 22528, 22931, 22321, 21952, 19121, 16970, 15697, 14758, 14254, 13660, 13131, 13736, 13916]}
 ```

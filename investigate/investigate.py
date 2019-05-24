@@ -54,7 +54,13 @@ class Investigate(object):
             "sample_samples":       "sample/{}/samples",
             "as_for_ip":            "bgp_routes/ip/{}/as_for_ip.json",
             "prefixes_for_asn":     "bgp_routes/asn/{}/prefixes_for_asn.json",
-            "timeline":             "timeline/{}"
+            "timeline":             "timeline/{}",
+            "pdns_domain":          "pdns/domain/{}",
+            "pdns_name":            "pdns/name/{}",
+            "pdns_ip":              "pdns/ip/{}",
+            "pdns_timeline":        "pdns/timeline/{}",
+            "pdns_raw":             "pdns/raw/\"{}\"",
+            "domain_volume":        "domains/volume/{}"
         }
         self._auth_header = {"Authorization": "Bearer " + self.api_key}
         self._session = requests.Session()
@@ -307,7 +313,6 @@ class Investigate(object):
 
     def prefixes_for_asn(self, asn):
         '''Gets the AS information for a given ASN. Return the CIDR and geolocation associated with the AS.'''
-
         uri = self._uris["prefixes_for_asn"].format(asn)
         resp_json = self.get_parse(uri)
 
@@ -322,3 +327,79 @@ class Investigate(object):
         resp_json = self.get_parse(uri)
 
         return resp_json
+
+
+    def pdns_domain(self, domain, limit=None, offset=0, sortorder='desc', sortby=None, recordType=None):
+        '''Returns the Resource Record(RR) data for DNS responses, and categorization data,
+        where the answer ( or rdata) is the domain(s).
+        '''
+        uri = self._uris["pdns_domain"].format(domain)
+        params = {'limit': limit, 'offset': offset, sortorder: sortorder, sortby: sortby, recordType: recordType}
+
+        return self.get_parse(uri, params)
+
+    def pdns_name(self, name, limit=None, offset=0, sortorder='desc', sortby=None, recordType=None):
+        '''
+        Returns data from DNS queries that resolvers received, and categorization data.
+        '''
+        uri = self._uris["pdns_name"].format(name)
+        params = {'limit': limit, 'offset': offset, sortorder: sortorder, sortby: sortby, recordType: recordType}
+
+        return self.get_parse(uri, params)
+
+    def pdns_ip(self, ip, limit=None, offset=0, sortorder='desc', sortby=None, recordType=None):
+        '''
+        Returns the Resource Record (RR) data for DNS responses, and categorization data, where the answer (or data) is the IP address.
+        '''
+        uri = self._uris["pdns_ip"].format(ip)
+        params = {'limit': limit, 'offset': offset, sortorder: sortorder, sortby: sortby, recordType: recordType}
+
+        return self.get_parse(uri, params)
+
+    def pdns_timeline(self, timeline, recordType=None):
+        '''
+        Get a snapshot of passive DNS and Umbrella categorization history for a domain name.
+        '''
+        uri = self._uris["pdns_timeline"].format(timeline)
+        params = {recordType: recordType}
+
+        return self.get_parse(uri, params)
+
+    def pdns_raw(self, raw, limit=None, offset=0, sortorder='desc', sortby=None, recordType=None):
+        '''
+        Get passive DNS and Umbrella categorization data for TXT records.
+        '''
+        uri = self._uris["pdns_raw"].format(raw)
+        params = {'limit': limit, 'offset': offset, sortorder: sortorder, sortby: sortby, recordType: recordType}
+
+        return self.get_parse(uri, params)
+
+    def domain_volume(self, domain, start=None, stop=None, match='all'):
+        '''Number of DNS queries made per hour to the specified domain by users'''
+
+        params = dict()
+
+        if start is None:
+            start = datetime.timedelta(days=30)
+        if isinstance(start, datetime.timedelta):
+            params['start'] = int(time.mktime((datetime.datetime.utcnow() - start).timetuple()) * 1000)
+        elif isinstance(start, datetime.datetime):
+            params['start'] = int(time.mktime(start.timetuple()) * 1000)
+        else:
+            raise Investigate.SEARCH_ERR
+
+        if stop is None:
+            stop = datetime.datetime.now()
+        if isinstance(stop, datetime.timedelta):
+            params['stop'] = int(time.mktime((datetime.datetime.utcnow() - stop).timetuple()) * 1000)
+        elif isinstance(stop, datetime.datetime):
+            params['stop'] = int(time.mktime(stop.timetuple()) * 1000)
+        else:
+            raise Investigate.SEARCH_ERR
+
+        if match is not None and match in ('all' or 'component' or 'exact'):
+            params['match'] = match
+
+        uri = self._uris['domain_volume'].format(domain)
+
+        return self.get_parse(uri, params)
