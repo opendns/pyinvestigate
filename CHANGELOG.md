@@ -21,3 +21,8 @@ Make library compatible with both python 2.x and python 3.x.
 ### Changed
 
 Added timeline endpoint to library, cleaned up deprecated endpoints. 
+
+## [1.6.0] 2019-05-28
+### Changed
+
+Added pdns and domain volume endpoints. 
