@@ -39,11 +39,11 @@ which can be found [here](https://investigate.umbrella.com/tokens-view).
 {u'found': True, u'pfs2': [[u'artstudioworks.net', 0.09335579514372229], [u'greencompany.com', 0.09335579514372229], [u'discovermammoth.com', 0.09335579514372229], [u'pacificwood.net', 0.09335579514372229], [u'www.harry4moonshine.com', 0.09335579514372229], [u'piedmontbank.com', 0.06762387315391016], [u'visiblebanking.com', 0.057415065440662744], [u'agenpialadunia.forexsignaler.com', 0.0549989754684476], [u'attached2parenting.com', 0.05348786151107391], [u'f15ijp.com', 0.04177207224401986], [u'www.mammothforums.com', 0.035603499171633544], [u'yazilimsozluk.com', 0.030851688398938874], [u'm.mixcloud.com', 0.025642243122907794], [u'vdoop.com', 0.01809189221816008], [u'jajah.com', 0.014693120965801757], [u'www.banterrabank.com', 0.014203066065439056], [u'ifbyphone.com', 0.01271383467301864], [u'riggedpoker.host56.com', 0.009728822740707535], [u'biamar.com.br', 0.009295803936207648], [u'www.pdfpasswordremover.tk', 0.009270658956305402], [u'textyourexbackfreesite.blogspot.com', 0.008774333937027498], [u'invox.com', 0.00831533412729124], [u'www.greenhopefinearts.org', 0.007618836085561211], [u'redirect.subscribe.ru', 0.007201461975779442], [u'sciencerush.homestead.com', 0.0064524714293837685], [u'ringcentral.com', 0.006078364744157428], [u'www.savingsdaily.com', 0.005755849214175203], [u'www.greenhopeband.org', 0.005654408857823953], [u'corp.myezaccess.com', 0.005433811444538917]]}
 
 # Related Domains
->>> inv.related("test.com")
+>>> inv.related('test.com')
 {u'tb1': [[u't.co', 11.0], [u'opcaobrasil.com.br', 10.0], [u'analytics.twitter.com', 9.0], [u'fallbackmx.spamexperts.eu', 8.0], [u'mx.spamexperts.com', 8.0], [u'watson.microsoft.com', 8.0], [u'www.pedroconti.com', 8.0], [u'ent-shasta-rrs.symantec.com', 7.0], [u'lastmx.spamexperts.net', 7.0], [u'www.julianburford.nl', 7.0], [u'www.facebook.com', 7.0], [u'1.gravatar.com', 6.0], [u'hrbssr.hrblock.com', 6.0], [u'rum-collector.pingdom.net', 6.0], [u'sites.google.com', 6.0], [u'www.fontfabric.com', 6.0], [u'fonts.googleapis.com', 5.0], [u'checkip.dyndns.org', 5.0], [u'c.microsoft.com', 5.0], [u'twitter.com', 5.0], [u'themenectar.ticksy.com', 5.0], [u'oauth.googleusercontent.com', 5.0], [u'homegroup.org.uk', 5.0], [u'google.com', 5.0], [u'fmr.hrblock.com', 4.0], [u'lifetouch.com', 4.0], [u'myblock.hrblock.com', 4.0], [u'ocsp.msocsp.com', 4.0], [u'ps.wcpss.net', 4.0], [u'spaceboundthemovie.tumblr.com', 4.0], [u'themes.googleusercontent.com', 4.0], [u'www.flickr.com', 4.0], [u'www.greetz.com', 4.0], [u'www.microsoft.com', 4.0], [u'www.twitter.com', 4.0], [u'0.gravatar.com', 3.0], [u'ak.fbcdn.net', 3.0], [u'assets.pinterest.com', 3.0], [u'business.telecomitalia.it', 3.0], [u'cdp1.public-trust.com', 3.0], [u'ctldl.windowsupdate.com', 3.0], [u'jajah.com', 3.0], [u'linkedin.com', 3.0], [u'ieonline.microsoft.com', 3.0], [u'ifbyphone.com', 3.0], [u'fpdownload2.macromedia.com', 3.0], [u'hm.webtrends.com', 3.0], [u'invox.com', 3.0], [u'www.trichromium.com', 3.0], [u'www.surveymonkey.com', 3.0], [u'www.linkedin.com', 3.0], [u'www.bing.com', 3.0], [u'www.4shared.com', 3.0], [u'time.windows.com', 3.0], [u'themenectar.com', 3.0], [u'statse.webtrendslive.com', 3.0], [u'skype.com', 3.0], [u'sfintest.hrblock.net', 3.0], [u'ringcentral.com', 3.0], [u'redirect.disqus.com', 3.0], [u'php.net', 3.0], [u'phone.com', 3.0], [u'paystub.wcpss.net', 3.0], [u'osp.osmsinc.com', 3.0], [u'ocsp.verisign.com', 3.0], [u'mx.canal2jujuy.com', 3.0], [u'memfeta.com.sa', 3.0]], u'found': True}
 
 # Security Features
->>> inv.security("test.com")
+>>> inv.security('test.com')
 {u'found': True, u'handlings': {u'blocked': 0.4166666666666667, u'normal': 0.5833333333333334}, u'dga_score': 0.0, u'rip_score': 0.0, u'asn_score': -0.1196966534327165, u'securerank2': 75.30526815812449, u'popularity': 52.80364108101653, u'tld_geodiversity': [], u'attack': u'', u'geoscore': 0.0, u'ks_test': 0.0, u'pagerank': 29.357018, u'entropy': 1.5, u'prefix_score': -1.485459001114686, u'perplexity': 0.021424157236163657, u'geodiversity': [[u'US', 0.6666667], [u'IL', 0.33333334]], u'fastflux': False, u'threat_type': u'', u'geodiversity_normalized': [[u'IL', 0.9945923984947999], [u'US', 0.005407601505200155]]}
 
 # Domain Tags
@@ -79,7 +79,8 @@ which can be found [here](https://investigate.umbrella.com/tokens-view).
 
 # Search newly observed domains by regex pattern
 >>> import datetime
->>> inv.search('paypal.*', start=datetime.timedelta(days=1), limit=100, include_category=True)
+>>> inv.search('paypal.*', start=datetime.timedelta(days=1), limit=100, include_category=True, _type='all')
+>>> inv.search('paypal.*', start=1561654675000, limit=100, include_category=True, _type='all')
 {u'matches': [{u'securityCategories': None, u'firstSeenISO': u'2016-02-12T11:18:00.000Z', u'name': u'paypal.cgi-bin.resolvemerchant.webappmpphome.com', u'firstSeen': 1455275880000}
 
 # Associated malware samples for a domain, IP, or URL
@@ -134,5 +135,10 @@ which can be found [here](https://investigate.umbrella.com/tokens-view).
 # DNS queries made per hour to specified domain.
 >>> import datetime
 >>> inv.domain_volume('umbrella.com', start=datetime.timedelta(days=5), stop=datetime.timedelta(days=2), match="exact")
+>>> inv.domain_volume('umbrella.com', start=1558328400000, stop=1558587600000, match="exact")
 {u'dates': [1558328400000, 1558587600000], u'queries': [14006, 13971, 14837, 15076, 15024, 15205, 16029, 19001, 21547, 23152, 23638, 22269, 21405, 22077, 27304, 28948, 22575, 17526, 16317, 15743, 15016, 14591, 15196, 15028, 15808, 16381, 17149, 17615, 17824, 16874, 17018, 20468, 23474, 23458, 23050, 23491, 27228, 23572, 23050, 22005, 19410, 17046, 15750, 14822, 14725, 14441, 13867, 14266, 14496, 14973, 15096, 14940, 15101, 15006, 16303, 18729, 23021, 23639, 23018, 22303, 22528, 22931, 22321, 21952, 19121, 16970, 15697, 14758, 14254, 13660, 13131, 13736, 13916]}
+
+# Risk Score for specified domain.
+>>> inv.risk_score('bibikun.ru')
+{u'risk_score': 16}
 ```
