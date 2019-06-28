@@ -26,3 +26,8 @@ Added timeline endpoint to library, cleaned up deprecated endpoints.
 ### Changed
 
 Added pdns and domain volume endpoints. 
+
+## [1.7.0] 2019-06-28
+### Changed
+
+Bug fixes and adding risk score. 
