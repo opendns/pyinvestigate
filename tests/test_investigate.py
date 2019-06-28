@@ -273,7 +273,7 @@ def test_ns_whois_sort_by_default(inv):
     assert resp_json['auth1.umbrella.com']['sortField'] == 'domain name [default]'
 
 def test_search(inv):
-    resp_json = inv.search('paypal.*', start=datetime.timedelta(days=1), limit=100, include_category=True)
+    resp_json = inv.search('paypal.*', start=datetime.timedelta(days=1), limit=100, include_category=True, _type='all')
 
     search_keys = [
         'matches', 'totalResults', 'limit', 'expression', 'moreDataAvailable'
@@ -451,7 +451,7 @@ def test_timeline(inv):
     search_keys = [
         'categories',
         'attacks',
-        'threatTypes', 
+        'threatTypes',
         'timestamp'
     ]
 
@@ -602,12 +602,21 @@ def test_pdns_raw(inv):
     assert_keys_in(resp_json['pageInfo'], *pageInfo_keys)
     assert_keys_in(resp_json['records'][0], *records_keys)
 
-def test_domian_volume(inv):
+def test_domain_volume(inv):
     resp_json = inv.domain_volume('umbrella.com', start=datetime.timedelta(days=1), match='component')
 
     search_keys = [
         'dates',
         'queries',
+    ]
+
+    assert_keys_in(resp_json, *search_keys)
+
+def test_risk_score(inv):
+    resp_json = inv.risk_score('bibikun.ru')
+
+    search_keys = [
+        'risk_score'
     ]
 
     assert_keys_in(resp_json, *search_keys)

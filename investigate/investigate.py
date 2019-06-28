@@ -60,7 +60,8 @@ class Investigate(object):
             "pdns_ip":              "pdns/ip/{}",
             "pdns_timeline":        "pdns/timeline/{}",
             "pdns_raw":             "pdns/raw/\"{}\"",
-            "domain_volume":        "domains/volume/{}"
+            "domain_volume":        "domains/volume/{}",
+            "risk_score":           "domains/risk-score/{}"
         }
         self._auth_header = {"Authorization": "Bearer " + self.api_key}
         self._session = requests.Session()
@@ -234,7 +235,7 @@ class Investigate(object):
         resp_json = self.get_parse(uri, params=params)
         return resp_json
 
-    def search(self, pattern, start=None, limit=None, include_category=None):
+    def search(self, pattern, start=None, limit=None, include_category=None, _type=None):
         '''Searches for domains that match a given pattern'''
 
         params = dict()
@@ -242,10 +243,15 @@ class Investigate(object):
         if start is None:
             start = datetime.timedelta(days=30)
 
+        if _type is not None:
+            params['type'] = _type
+
         if isinstance(start, datetime.timedelta):
             params['start'] = int(time.mktime((datetime.datetime.utcnow() - start).timetuple()) * 1000)
         elif isinstance(start, datetime.datetime):
             params['start'] = int(time.mktime(start.timetuple()) * 1000)
+        elif isinstance(start, int) and (datetime.datetime.now()-datetime.datetime.fromtimestamp(start/1000)).days < 30:
+            params['start'] = int(start)
         else:
             raise Investigate.SEARCH_ERR
 
@@ -385,6 +391,8 @@ class Investigate(object):
             params['start'] = int(time.mktime((datetime.datetime.utcnow() - start).timetuple()) * 1000)
         elif isinstance(start, datetime.datetime):
             params['start'] = int(time.mktime(start.timetuple()) * 1000)
+        elif isinstance(start, int) and (datetime.datetime.now()-datetime.datetime.fromtimestamp(start/1000)).days < 30:
+            params['start'] = int(start)
         else:
             raise Investigate.SEARCH_ERR
 
@@ -394,6 +402,8 @@ class Investigate(object):
             params['stop'] = int(time.mktime((datetime.datetime.utcnow() - stop).timetuple()) * 1000)
         elif isinstance(stop, datetime.datetime):
             params['stop'] = int(time.mktime(stop.timetuple()) * 1000)
+        elif isinstance(stop, int) and (datetime.datetime.now() - datetime.datetime.fromtimestamp(stop/1000)).days < 30:
+            params['stop'] = int(stop)
         else:
             raise Investigate.SEARCH_ERR
 
@@ -403,3 +413,12 @@ class Investigate(object):
         uri = self._uris['domain_volume'].format(domain)
 
         return self.get_parse(uri, params)
+
+    def risk_score(self, domain_name):
+        '''
+        Gives a risk score based on Umbrella analysis for given domain
+        '''
+
+        uri = self._uris['risk_score'].format(domain_name)
+
+        return self.get_parse(uri)
