@@ -22,6 +22,7 @@ class Investigate(object):
     DEFAULT_LIMIT = None
     DEFAULT_OFFSET = None
     DEFAULT_SORT = None
+    DEFAULT_UTM_SOURCE = None
     IP_PATTERN = re.compile(r'(\d{1,3}\.){3}\d{1,3}')
 
     DOMAIN_ERR = ValueError("domains must be a string or a list of strings")
@@ -31,7 +32,7 @@ class Investigate(object):
     )
     SEARCH_ERR = ValueError("Start argument must be a datetime or a timedelta")
 
-    def __init__(self, api_key, proxies={}):
+    def __init__(self, api_key, proxies={}, utm_source=DEFAULT_UTM_SOURCE):
         self.api_key = api_key
         self.proxies = proxies
         self._uris = {
@@ -63,12 +64,16 @@ class Investigate(object):
             "domain_volume":        "domains/volume/{}"
         }
         self._auth_header = {"Authorization": "Bearer " + self.api_key}
+        self._utm_source = utm_source
         self._session = requests.Session()
 
     def get(self, uri, params={}):
         '''A generic method to make GET requests to the OpenDNS Investigate API
         on the given URI.
         '''
+
+        params['utm_source'] = self._utm_source if self._utm_source else None
+
         return self._session.get(urljoin(Investigate.BASE_URL, uri),
             params=params, headers=self._auth_header, proxies=self.proxies
         )
@@ -77,6 +82,9 @@ class Investigate(object):
         '''A generic method to make POST requests to the OpenDNS Investigate API
         on the given URI.
         '''
+
+        params['utm_source'] = self._utm_source if self._utm_source else None
+
         return self._session.post(
             urljoin(Investigate.BASE_URL, uri),
             params=params, data=data, headers=self._auth_header,
