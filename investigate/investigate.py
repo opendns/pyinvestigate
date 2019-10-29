@@ -68,27 +68,30 @@ class Investigate(object):
         self._utm_source = utm_source
         self._session = requests.Session()
 
+    def params_with_utm_source(self, params):
+        new_params = {k:v for k, v in params.items()}
+        new_params['utm_source'] = self._utm_source
+        return new_params
+
     def get(self, uri, params={}):
         '''A generic method to make GET requests to the OpenDNS Investigate API
         on the given URI.
         '''
-
-        params['utm_source'] = self._utm_source if self._utm_source else None
-
         return self._session.get(urljoin(Investigate.BASE_URL, uri),
-            params=params, headers=self._auth_header, proxies=self.proxies
+            params=self.params_with_utm_source(params) if self._utm_source else params,
+            headers=self._auth_header,
+            proxies=self.proxies
         )
 
     def post(self, uri, params={}, data={}):
         '''A generic method to make POST requests to the OpenDNS Investigate API
         on the given URI.
         '''
-
-        params['utm_source'] = self._utm_source if self._utm_source else None
-
         return self._session.post(
             urljoin(Investigate.BASE_URL, uri),
-            params=params, data=data, headers=self._auth_header,
+            params=self.params_with_utm_source(params) if self._utm_source else params,
+            data=data,
+            headers=self._auth_header,
             proxies=self.proxies
         )
 
