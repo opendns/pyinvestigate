@@ -31,3 +31,13 @@ Added pdns and domain volume endpoints.
 ### Changed
 
 Bug fixes and adding risk score. 
+
+## [1.8.0] 2019-11-06
+### Changed
+Added utm_source
+
+## [1.9.0] 2019-05-13
+### Changed
+New risk-score endpoint and pdns endpoint bug fixes.
+
+
