@@ -36,3 +36,8 @@ Bug fixes and adding risk score.
 ### Changed
 
 Added utm_source
+
+## [1.9.0] 2020-05-13
+### Changed
+
+New risk-score endpoint and pdns endpoint bug fixes.
