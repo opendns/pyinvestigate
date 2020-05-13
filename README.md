@@ -140,5 +140,5 @@ which can be found [here](https://investigate.umbrella.com/tokens-view).
 
 # Risk Score for specified domain.
 >>> inv.risk_score('bibikun.ru')
-{u'risk_score': 16}
+{u'indicators': [{u'indicator': u'Geo Popularity Score', u'normalized_score': 19, u'score': -1.4164641699999994}, {u'indicator': u'Keyword Score', u'normalized_score': 4, u'score': 0.04928461214170483}, {u'indicator': u'Lexical', u'normalized_score': 53, u'score': 0.536}, {u'indicator': u'Popularity 1 Day', u'normalized_score': 56, u'score': 56.43}, {u'indicator': u'Popularity 30 Day', u'normalized_score': 56, u'score': 56.05}, {u'indicator': u'Popularity 7 Day', u'normalized_score': 55, u'score': 55.96}, {u'indicator': u'Popularity 90 Day', u'normalized_score': 57, u'score': 57.09}, {u'indicator': u'TLD Rank Score', u'normalized_score': 0, u'score': 0.00796622168091424}, {u'indicator': u'Umbrella Block Status', u'normalized_score': 0, u'score': False}], u'risk_score': 14}
 ```
