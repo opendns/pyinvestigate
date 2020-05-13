@@ -351,7 +351,7 @@ class Investigate(object):
         where the answer ( or rdata) is the domain(s).
         '''
         uri = self._uris["pdns_domain"].format(domain)
-        params = {'limit': limit, 'offset': offset, sortorder: sortorder, sortby: sortby, recordType: recordType}
+        params = {'limit': limit, 'offset': offset, 'sortorder': sortorder, 'sortby': sortby, 'recordType': recordType}
 
         return self.get_parse(uri, params)
 
@@ -360,7 +360,7 @@ class Investigate(object):
         Returns data from DNS queries that resolvers received, and categorization data.
         '''
         uri = self._uris["pdns_name"].format(name)
-        params = {'limit': limit, 'offset': offset, sortorder: sortorder, sortby: sortby, recordType: recordType}
+        params = {'limit': limit, 'offset': offset, 'sortorder': sortorder, 'sortby': sortby, 'recordType': recordType}
 
         return self.get_parse(uri, params)
 
@@ -369,7 +369,7 @@ class Investigate(object):
         Returns the Resource Record (RR) data for DNS responses, and categorization data, where the answer (or data) is the IP address.
         '''
         uri = self._uris["pdns_ip"].format(ip)
-        params = {'limit': limit, 'offset': offset, sortorder: sortorder, sortby: sortby, recordType: recordType}
+        params = {'limit': limit, 'offset': offset, 'sortorder': sortorder, 'sortby': sortby, 'recordType': recordType}
 
         return self.get_parse(uri, params)
 
@@ -378,7 +378,7 @@ class Investigate(object):
         Get a snapshot of passive DNS and Umbrella categorization history for a domain name.
         '''
         uri = self._uris["pdns_timeline"].format(timeline)
-        params = {recordType: recordType}
+        params = {'recordType': recordType}
 
         return self.get_parse(uri, params)
 
@@ -387,7 +387,7 @@ class Investigate(object):
         Get passive DNS and Umbrella categorization data for TXT records.
         '''
         uri = self._uris["pdns_raw"].format(raw)
-        params = {'limit': limit, 'offset': offset, sortorder: sortorder, sortby: sortby, recordType: recordType}
+        params = {'limit': limit, 'offset': offset, 'sortorder': sortorder, 'sortby': sortby, 'recordType': recordType}
 
         return self.get_parse(uri, params)
 
