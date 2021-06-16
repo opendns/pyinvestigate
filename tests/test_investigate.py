@@ -616,15 +616,15 @@ def test_risk_score(inv):
     resp_json = inv.risk_score('bibikun.ru')
 
     search_keys = [
-        'riskScore',
-        'features'
+        'risk_score',
+        'indicators'
     ]
 
     features_keys = [
-        'feature',
-        'normalizedScore',
+        'indicator',
+        'normalized_score',
         'score'
     ]
 
     assert_keys_in(resp_json, *search_keys)
-    assert_keys_in(resp_json['features'][0], *features_keys)
+    assert_keys_in(resp_json['indicators'][0], *features_keys)
