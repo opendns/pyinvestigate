@@ -18,7 +18,8 @@ $ ./setup.py install
 
 # Basic Usage
 To use, simply build an `Investigate` object with your Investigate API key,
-which can be found [here](https://investigate.umbrella.com/tokens-view).
+which can be found [here](https://dashboard.umbrella.com/o/[ORG_ID]/#/investigate/tokens-view).
+`ORG_ID` is the organization id.
 
 ```python
 >>> import investigate

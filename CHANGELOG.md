@@ -41,3 +41,8 @@ Added utm_source
 ### Changed
 
 New risk-score endpoint and pdns endpoint bug fixes.
+
+## [1.10.0] 2021-06-15
+### Changed
+
+Bug fixes and make it compatible with Python2 and Python3
