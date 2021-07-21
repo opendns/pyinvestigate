@@ -227,7 +227,7 @@ class Investigate(object):
             params = {'limit': limit, 'offset': offset, 'sortField': sort_field}
         else:
             uri = self._uris["whois_ns"].format('')
-            params = {'emailList' : ','.join(nameservers), 'limit': limit, 'offset': offset, 'sortField': sort_field}
+            params = {'nameServerList' : ','.join(nameservers), 'limit': limit, 'offset': offset, 'sortField': sort_field}
 
         resp_json = self.get_parse(uri, params=params)
         return resp_json
